@@ -178,7 +178,7 @@ export class Dartboard extends HTMLElement {
         const name = `dartboard-${event.type}`;
         console.log({name});
         const detail = { event, point, polar, sector, ring };
-        const e = new CustomEvent<any>(name, {
+        const e = new CustomEvent(name, {
           detail,
           bubbles: true,
           cancelable: true,

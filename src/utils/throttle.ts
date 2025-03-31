@@ -1,8 +1,9 @@
-export const throttle = (func: Function, delay: number) => {
-  let timerFlag: NodeJS.Timer | null = null;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const throttle = (func: () => void, delay: number) => {
+  let timerFlag: ReturnType<typeof setInterval> | null = null;
   return (...args: any[]) => {
     if (timerFlag === null) {
-      func(...args);
+      func(...(args) as []);
       timerFlag = setTimeout(() => {
         timerFlag = null;
       }, delay);
@@ -10,9 +11,9 @@ export const throttle = (func: Function, delay: number) => {
   };
 };
 
-export const throttleAnimation = (func: Function) => {
+export const throttleAnimation = (func: () => void) => {
   let isFiring = false;
-  return (...args: any[]) => {
+  return (...args: []) => {
     if (isFiring === false) {
       requestAnimationFrame(() => {
         func(...args);

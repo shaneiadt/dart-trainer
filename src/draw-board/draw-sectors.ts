@@ -1,4 +1,3 @@
-/* eslint-disable prefer-destructuring */
 import { Theme } from '../theme';
 import { Board } from './board';
 
