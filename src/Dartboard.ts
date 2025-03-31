@@ -176,7 +176,6 @@ export class Dartboard extends HTMLElement {
           offsetY,
         );
         const name = `dartboard-${event.type}`;
-        console.log({name});
         const detail = { event, point, polar, sector, ring };
         const e = new CustomEvent(name, {
           detail,
