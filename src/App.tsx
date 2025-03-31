@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import './dartbot-dartboard'
 import './App.css'
-import { useEffect, useRef } from 'react'
-import { Board, getRandomPoint, getSectorIndex, getSectorValue, getTargetPoint } from './draw-board/board'
+import { useRef } from 'react'
+// import { Board, getRandomPoint, getSectorIndex, getSectorValue, getTargetPoint } from './draw-board/board'
+import { Board, getRandomPoint, } from './draw-board/board'
 import { PolarPoint } from './utils'
 
 declare module "react" {

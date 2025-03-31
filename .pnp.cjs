@@ -28,6 +28,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["@eslint/js", "npm:9.23.0"],\
+          ["@types/lodash", "npm:4.17.16"],\
           ["@types/react", "npm:19.0.12"],\
           ["@types/react-dom", "virtual:676b1f89ef0c43439244255b19dc9e5332909e5e4f13c2f71a3bb81a2913525896865d09a508d81b9b56def08d0dbf4b5429cce989e3a191667a6a075a27f5ff#npm:19.0.4"],\
           ["@vitejs/plugin-react", "virtual:676b1f89ef0c43439244255b19dc9e5332909e5e4f13c2f71a3bb81a2913525896865d09a508d81b9b56def08d0dbf4b5429cce989e3a191667a6a075a27f5ff#npm:4.3.4"],\
@@ -35,6 +36,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-hooks", "virtual:676b1f89ef0c43439244255b19dc9e5332909e5e4f13c2f71a3bb81a2913525896865d09a508d81b9b56def08d0dbf4b5429cce989e3a191667a6a075a27f5ff#npm:5.2.0"],\
           ["eslint-plugin-react-refresh", "virtual:676b1f89ef0c43439244255b19dc9e5332909e5e4f13c2f71a3bb81a2913525896865d09a508d81b9b56def08d0dbf4b5429cce989e3a191667a6a075a27f5ff#npm:0.4.19"],\
           ["globals", "npm:15.15.0"],\
+          ["lodash", "npm:4.17.21"],\
           ["react", "npm:19.0.0"],\
           ["react-dom", "virtual:676b1f89ef0c43439244255b19dc9e5332909e5e4f13c2f71a3bb81a2913525896865d09a508d81b9b56def08d0dbf4b5429cce989e3a191667a6a075a27f5ff#npm:19.0.0"],\
           ["typescript", "patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>::version=5.7.3&hash=5786d5"],\
@@ -1084,6 +1086,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/lodash", [\
+      ["npm:4.17.16", {\
+        "packageLocation": "../../.yarn/berry/cache/@types-lodash-npm-4.17.16-edc964ca5b-10c0.zip/node_modules/@types/lodash/",\
+        "packageDependencies": [\
+          ["@types/lodash", "npm:4.17.16"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/react", [\
       ["npm:19.0.12", {\
         "packageLocation": "../../.yarn/berry/cache/@types-react-npm-19.0.12-fdf3a1c260-10c0.zip/node_modules/@types/react/",\
@@ -1610,6 +1621,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["dart-trainer", "workspace:."],\
           ["@eslint/js", "npm:9.23.0"],\
+          ["@types/lodash", "npm:4.17.16"],\
           ["@types/react", "npm:19.0.12"],\
           ["@types/react-dom", "virtual:676b1f89ef0c43439244255b19dc9e5332909e5e4f13c2f71a3bb81a2913525896865d09a508d81b9b56def08d0dbf4b5429cce989e3a191667a6a075a27f5ff#npm:19.0.4"],\
           ["@vitejs/plugin-react", "virtual:676b1f89ef0c43439244255b19dc9e5332909e5e4f13c2f71a3bb81a2913525896865d09a508d81b9b56def08d0dbf4b5429cce989e3a191667a6a075a27f5ff#npm:4.3.4"],\
@@ -1617,6 +1629,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-hooks", "virtual:676b1f89ef0c43439244255b19dc9e5332909e5e4f13c2f71a3bb81a2913525896865d09a508d81b9b56def08d0dbf4b5429cce989e3a191667a6a075a27f5ff#npm:5.2.0"],\
           ["eslint-plugin-react-refresh", "virtual:676b1f89ef0c43439244255b19dc9e5332909e5e4f13c2f71a3bb81a2913525896865d09a508d81b9b56def08d0dbf4b5429cce989e3a191667a6a075a27f5ff#npm:0.4.19"],\
           ["globals", "npm:15.15.0"],\
+          ["lodash", "npm:4.17.21"],\
           ["react", "npm:19.0.0"],\
           ["react-dom", "virtual:676b1f89ef0c43439244255b19dc9e5332909e5e4f13c2f71a3bb81a2913525896865d09a508d81b9b56def08d0dbf4b5429cce989e3a191667a6a075a27f5ff#npm:19.0.0"],\
           ["typescript", "patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>::version=5.7.3&hash=5786d5"],\
@@ -2429,6 +2442,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["locate-path", "npm:6.0.0"],\
           ["p-locate", "npm:5.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["lodash", [\
+      ["npm:4.17.21", {\
+        "packageLocation": "../../.yarn/berry/cache/lodash-npm-4.17.21-6382451519-10c0.zip/node_modules/lodash/",\
+        "packageDependencies": [\
+          ["lodash", "npm:4.17.21"]\
         ],\
         "linkType": "HARD"\
       }]\
