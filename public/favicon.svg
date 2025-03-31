@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="453" height="453"><svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="453" height="453" id="SvgjsSvg1201">
+  <defs id="SvgjsDefs1200">
+    <marker refX="0" refY="0" orient="auto" id="SvgjsMarker1199" style="overflow:visible">
+      <path d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.97309,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z" transform="matrix(-0.3,0,0,-0.3,1.5,0)" id="SvgjsPath1198" style="font-size:12px;fill:#62adff;fill-opacity:1;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"></path>
+    </marker>
+  </defs>
+  <g transform="translate(-9.31263,-200.1479)" id="SvgjsG1197">
+    <g transform="translate(235.81263,426.6479)" id="SvgjsG1196">
+      <g id="SvgjsG1195">
+        <path d="M 226.5,0 A 226.5,226.5 0 1 1 -226.5,2.7737334e-14 A 226.5,226.5 0 1 1 226.5,-5.5474668e-14 z" id="SvgjsPath1194" style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.10000002;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"></path>
+      </g>
+      <g id="SvgjsG1193" style="stroke:#d0edfd;stroke-width:1.10000002;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
+        <path d="M 170.55,0 A 170.55,170.55 0 1 1 -170.55,2.0885662e-14 A 170.55,170.55 0 1 1 170.55,-4.1771323e-14 z" id="SvgjsPath1192" style="opacity:1;fill:#ff0000;fill-opacity:1;fill-rule:evenodd"></path>
+        <path d="M 161.45,0 A 161.45,161.45 0 1 1 -161.45,1.9771269e-14 A 161.45,161.45 0 1 1 161.45,-3.9542538e-14 z" id="SvgjsPath1191" style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd"></path>
+        <path d="M 107.55,0 A 107.55,107.55 0 1 1 -107.55,1.3170642e-14 A 107.55,107.55 0 1 1 107.55,-2.6341283e-14 z" id="SvgjsPath1190" style="opacity:1;fill:#ff0000;fill-opacity:1;fill-rule:evenodd"></path>
+        <path d="M 98.449997,0 A 98.449997,98.449997 0 1 1 -98.449997,1.2056249e-14 A 98.449997,98.449997 0 1 1 98.449997,-2.4112498e-14 z" id="SvgjsPath1189" style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd"></path>
+        <g id="SvgjsG1188" style="opacity:1;fill:#00a000;fill-opacity:1;fill-rule:evenodd">
+          <path d="M 170.55,0 A 170.55,170.55 0 0 1 162.20269,52.70285 L 0,0 z" transform="matrix(-0.45399,-0.891007,0.891007,-0.45399,0,0)" id="SvgjsPath1187" style="fill:#00a000;fill-opacity:1"></path>
+          <path d="M 170.55,0 A 170.55,170.55 0 0 1 162.20269,52.70285 L 0,0 z" transform="matrix(-0.891006,-0.453991,0.453991,-0.891006,0,0)" id="SvgjsPath1186" style="fill:#00a000;fill-opacity:1"></path>
+          <path d="M 170.55,0 A 170.55,170.55 0 0 1 162.20269,52.70285 L 0,0 z" transform="matrix(-0.987688,0.156434,-0.156434,-0.987688,0,0)" id="SvgjsPath1185" style="fill:#00a000;fill-opacity:1"></path>
+          <path d="M 170.55,0 A 170.55,170.55 0 0 1 162.20269,52.70285 L 0,0 z" transform="matrix(-0.707107,0.707106,-0.707106,-0.707107,0,0)" id="SvgjsPath1184" style="fill:#00a000;fill-opacity:1"></path>
+          <path d="M 170.55,0 A 170.55,170.55 0 0 1 162.20269,52.70285 L 0,0 z" transform="matrix(-0.156435,0.987688,-0.987688,-0.156435,0,0)" id="SvgjsPath1183" style="fill:#00a000;fill-opacity:1"></path>
+          <path d="M 170.55,0 A 170.55,170.55 0 0 1 162.20269,52.70285 L 0,0 z" transform="matrix(0.45399,0.891007,-0.891007,0.45399,0,0)" id="SvgjsPath1182" style="fill:#00a000;fill-opacity:1"></path>
+          <path d="M 170.55,0 A 170.55,170.55 0 0 1 162.20269,52.70285 L 0,0 z" transform="matrix(0.891006,0.453991,-0.453991,0.891006,0,0)" id="SvgjsPath1181" style="fill:#00a000;fill-opacity:1"></path>
+          <path d="M 170.55,0 A 170.55,170.55 0 0 1 162.20269,52.70285 L 0,0 z" transform="matrix(0.987688,-0.156434,0.156434,0.987688,0,0)" id="SvgjsPath1180" style="fill:#00a000;fill-opacity:1"></path>
+          <path d="M 170.55,0 A 170.55,170.55 0 0 1 162.20269,52.70285 L 0,0 z" transform="matrix(0.707107,-0.707106,0.707106,0.707107,0,0)" id="SvgjsPath1179" style="fill:#00a000;fill-opacity:1"></path>
+          <path d="M 170.55,0 A 170.55,170.55 0 0 1 162.20269,52.70285 L 0,0 z" transform="matrix(0.156435,-0.987688,0.987688,0.156435,0,0)" id="SvgjsPath1178" style="fill:#00a000;fill-opacity:1"></path>
+        </g>
+        <g id="SvgjsG1177" style="opacity:1;fill:#e7e4c7;fill-opacity:1;fill-rule:evenodd">
+          <path d="M 161.45,0 A 161.45,161.45 0 0 1 153.54807,49.890794 L 0,0 z" transform="matrix(-0.45399,-0.891007,0.891007,-0.45399,0,0)" id="SvgjsPath1176"></path>
+          <path d="M 161.45,0 A 161.45,161.45 0 0 1 153.54807,49.890794 L 0,0 z" transform="matrix(-0.891006,-0.453991,0.453991,-0.891006,0,0)" id="SvgjsPath1175"></path>
+          <path d="M 161.45,0 A 161.45,161.45 0 0 1 153.54807,49.890794 L 0,0 z" transform="matrix(-0.987688,0.156434,-0.156434,-0.987688,0,0)" id="SvgjsPath1174"></path>
+          <path d="M 161.45,0 A 161.45,161.45 0 0 1 153.54807,49.890794 L 0,0 z" transform="matrix(-0.707107,0.707106,-0.707106,-0.707107,0,0)" id="SvgjsPath1173"></path>
+          <path d="M 161.45,0 A 161.45,161.45 0 0 1 153.54807,49.890794 L 0,0 z" transform="matrix(-0.156435,0.987688,-0.987688,-0.156435,0,0)" id="SvgjsPath1172"></path>
+          <path d="M 161.45,0 A 161.45,161.45 0 0 1 153.54807,49.890794 L 0,0 z" transform="matrix(0.45399,0.891007,-0.891007,0.45399,0,0)" id="SvgjsPath1171"></path>
+          <path d="M 161.45,0 A 161.45,161.45 0 0 1 153.54807,49.890794 L 0,0 z" transform="matrix(0.891006,0.453991,-0.453991,0.891006,0,0)" id="SvgjsPath1170"></path>
+          <path d="M 161.45,0 A 161.45,161.45 0 0 1 153.54807,49.890794 L 0,0 z" transform="matrix(0.987688,-0.156434,0.156434,0.987688,0,0)" id="SvgjsPath1169"></path>
+          <path d="M 161.45,0 A 161.45,161.45 0 0 1 153.54807,49.890794 L 0,0 z" transform="matrix(0.707107,-0.707106,0.707106,0.707107,0,0)" id="SvgjsPath1168"></path>
+          <path d="M 161.45,0 A 161.45,161.45 0 0 1 153.54807,49.890794 L 0,0 z" transform="matrix(0.156435,-0.987688,0.987688,0.156435,0,0)" id="SvgjsPath1167"></path>
+        </g>
+        <g id="SvgjsG1166" style="opacity:1;fill:#00a000;fill-opacity:1;fill-rule:evenodd">
+          <path d="M 107.55,0 A 107.55,107.55 0 0 1 102.28613,33.234779 L 0,0 z" transform="matrix(-0.45399,-0.891007,0.891007,-0.45399,0,0)" id="SvgjsPath1165"></path>
+          <path d="M 107.55,0 A 107.55,107.55 0 0 1 102.28613,33.234779 L 0,0 z" transform="matrix(-0.891006,-0.453991,0.453991,-0.891006,0,0)" id="SvgjsPath1164"></path>
+          <path d="M 107.55,0 A 107.55,107.55 0 0 1 102.28613,33.234779 L 0,0 z" transform="matrix(-0.987688,0.156434,-0.156434,-0.987688,0,0)" id="SvgjsPath1163"></path>
+          <path d="M 107.55,0 A 107.55,107.55 0 0 1 102.28613,33.234779 L 0,0 z" transform="matrix(-0.707107,0.707106,-0.707106,-0.707107,0,0)" id="SvgjsPath1162"></path>
+          <path d="M 107.55,0 A 107.55,107.55 0 0 1 102.28613,33.234779 L 0,0 z" transform="matrix(-0.156435,0.987688,-0.987688,-0.156435,0,0)" id="SvgjsPath1161"></path>
+          <path d="M 107.55,0 A 107.55,107.55 0 0 1 102.28613,33.234779 L 0,0 z" transform="matrix(0.45399,0.891007,-0.891007,0.45399,0,0)" id="SvgjsPath1160"></path>
+          <path d="M 107.55,0 A 107.55,107.55 0 0 1 102.28613,33.234779 L 0,0 z" transform="matrix(0.891006,0.453991,-0.453991,0.891006,0,0)" id="SvgjsPath1159"></path>
+          <path d="M 107.55,0 A 107.55,107.55 0 0 1 102.28613,33.234779 L 0,0 z" transform="matrix(0.987688,-0.156434,0.156434,0.987688,0,0)" id="SvgjsPath1158"></path>
+          <path d="M 107.55,0 A 107.55,107.55 0 0 1 102.28613,33.234779 L 0,0 z" transform="matrix(0.707107,-0.707106,0.707106,0.707107,0,0)" id="SvgjsPath1157"></path>
+          <path d="M 107.55,0 A 107.55,107.55 0 0 1 102.28613,33.234779 L 0,0 z" transform="matrix(0.156435,-0.987688,0.987688,0.156435,0,0)" id="SvgjsPath1156"></path>
+        </g>
+        <g id="SvgjsG1155" style="opacity:1;fill:#e7e4c7;fill-opacity:1;fill-rule:evenodd">
+          <path d="M 98.449997,0 A 98.449997,98.449997 0 0 1 93.631511,30.422723 L 0,0 z" transform="matrix(-0.45399,-0.891007,0.891007,-0.45399,0,0)" id="SvgjsPath1154" style="fill:#e7e4c7;fill-opacity:1"></path>
+          <path d="M 98.449997,0 A 98.449997,98.449997 0 0 1 93.631511,30.422723 L 0,0 z" transform="matrix(-0.891006,-0.453991,0.453991,-0.891006,0,0)" id="SvgjsPath1153" style="fill:#e7e4c7;fill-opacity:1"></path>
+          <path d="M 98.449997,0 A 98.449997,98.449997 0 0 1 93.631511,30.422723 L 0,0 z" transform="matrix(-0.987688,0.156434,-0.156434,-0.987688,0,0)" id="SvgjsPath1152" style="fill:#e7e4c7;fill-opacity:1"></path>
+          <path d="M 98.449997,0 A 98.449997,98.449997 0 0 1 93.631511,30.422723 L 0,0 z" transform="matrix(-0.707107,0.707106,-0.707106,-0.707107,0,0)" id="SvgjsPath1151" style="fill:#e7e4c7;fill-opacity:1"></path>
+          <path d="M 98.449997,0 A 98.449997,98.449997 0 0 1 93.631511,30.422723 L 0,0 z" transform="matrix(-0.156435,0.987688,-0.987688,-0.156435,0,0)" id="SvgjsPath1150" style="fill:#e7e4c7;fill-opacity:1"></path>
+          <path d="M 98.449997,0 A 98.449997,98.449997 0 0 1 93.631511,30.422723 L 0,0 z" transform="matrix(0.45399,0.891007,-0.891007,0.45399,0,0)" id="SvgjsPath1149" style="fill:#e7e4c7;fill-opacity:1"></path>
+          <path d="M 98.449997,0 A 98.449997,98.449997 0 0 1 93.631511,30.422723 L 0,0 z" transform="matrix(0.891006,0.453991,-0.453991,0.891006,0,0)" id="SvgjsPath1148" style="fill:#e7e4c7;fill-opacity:1"></path>
+          <path d="M 98.449997,0 A 98.449997,98.449997 0 0 1 93.631511,30.422723 L 0,0 z" transform="matrix(0.987688,-0.156434,0.156434,0.987688,0,0)" id="SvgjsPath1147" style="fill:#e7e4c7;fill-opacity:1"></path>
+          <path d="M 98.449997,0 A 98.449997,98.449997 0 0 1 93.631511,30.422723 L 0,0 z" transform="matrix(0.707107,-0.707106,0.707106,0.707107,0,0)" id="SvgjsPath1146" style="fill:#e7e4c7;fill-opacity:1"></path>
+          <path d="M 98.449997,0 A 98.449997,98.449997 0 0 1 93.631511,30.422723 L 0,0 z" transform="matrix(0.156435,-0.987688,0.987688,0.156435,0,0)" id="SvgjsPath1145" style="fill:#e7e4c7;fill-opacity:1"></path>
+        </g>
+        <path d="M 16.450001,0 A 16.450001,16.450001 0 1 1 -16.450001,2.0144775e-15 A 16.450001,16.450001 0 1 1 16.450001,-4.0289551e-15 z" id="SvgjsPath1144" style="opacity:1;fill:#00a000;fill-opacity:1;fill-rule:evenodd"></path>
+        <path d="M 6.9000001,0 A 6.9000001,6.9000001 0 1 1 -6.9000001,8.449784e-16 A 6.9000001,6.9000001 0 1 1 6.9000001,-1.6899568e-15 z" id="SvgjsPath1143" style="opacity:1;fill:#ff0000;fill-opacity:1;fill-rule:evenodd"></path>
+      </g>
+      <g id="SvgjsG1142" style="font-size:28px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;font-family:Sans">
+        <text x="-16.95171" y="-187.82498" id="SvgjsText1141" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="-16.95171" y="-187.82498" id="SvgjsTspan1140">20</tspan></text>
+        <text x="51.872234" y="-180.36624" id="SvgjsText1139" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="51.872234" y="-180.36624" id="SvgjsTspan1138">1</tspan></text>
+        <text x="100.0151" y="-150.53122" id="SvgjsText1137" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="100.0151" y="-150.53122" id="SvgjsTspan1136">18</tspan></text>
+        <text x="153.24347" y="-103.74449" id="SvgjsText1135" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="153.24347" y="-103.74449" id="SvgjsTspan1134">4</tspan></text>
+        <text x="173.92455" y="-45.769642" id="SvgjsText1133" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="173.92455" y="-45.769642" id="SvgjsTspan1132">13</tspan></text>
+        <text x="187.14688" y="9.1538963" id="SvgjsText1131" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="187.14688" y="9.1538963" id="SvgjsTspan1130">6</tspan><tspan x="187.14688" y="37.153896" id="SvgjsTspan1129"></tspan></text>
+        <text x="171.5513" y="67.467781" id="SvgjsText1128" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="171.5513" y="67.467781" id="SvgjsTspan1127">10</tspan></text>
+        <text x="142.7334" y="127.13781" id="SvgjsText1126" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="142.7334" y="127.13781" id="SvgjsTspan1125">15</tspan></text>
+        <text x="106.11771" y="169.85611" id="SvgjsText1124" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="106.11771" y="169.85611" id="SvgjsTspan1123">2</tspan></text>
+        <text x="42.718311" y="196.63982" id="SvgjsText1122" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="42.718311" y="196.63982" id="SvgjsTspan1121">17</tspan></text>
+        <text x="-6.1026163" y="208.16699" id="SvgjsText1120" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="-6.1026163" y="208.16699" id="SvgjsTspan1119">3</tspan></text>
+        <text x="-74.248497" y="199.01306" id="SvgjsText1118" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="-74.248497" y="199.01306" id="SvgjsTspan1117">19</tspan></text>
+        <text x="-123.74748" y="173.24644" id="SvgjsText1116" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="-123.74748" y="173.24644" id="SvgjsTspan1115">7</tspan></text>
+        <text x="-174.94165" y="127.13781" id="SvgjsText1114" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="-174.94165" y="127.13781" id="SvgjsTspan1113">16</tspan></text>
+        <text x="-193.58855" y="72.892326" id="SvgjsText1112" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="-193.58855" y="72.892326" id="SvgjsTspan1111">8</tspan></text>
+        <text x="-214.60867" y="8.8148642" id="SvgjsText1110" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="-214.60867" y="8.8148642" id="SvgjsTspan1109">11</tspan></text>
+        <text x="-208.50606" y="-48.820953" id="SvgjsText1108" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="-208.50606" y="-48.820953" id="SvgjsTspan1107">14</tspan></text>
+        <text x="-165.10965" y="-109.50809" id="SvgjsText1106" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="-165.10965" y="-109.50809" id="SvgjsTspan1105">9</tspan></text>
+        <text x="-134.25755" y="-152.22639" id="SvgjsText1104" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="-134.25755" y="-152.22639" id="SvgjsTspan1103">12</tspan></text>
+        <text x="-67.467812" y="-178.67107" id="SvgjsText1102" xml:space="preserve" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan x="-67.467812" y="-178.67107" id="SvgjsTspan1101">5</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>
