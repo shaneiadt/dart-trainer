@@ -6,6 +6,7 @@ import { Board, getSectorValue } from './draw-board/board'
 import { PolarPoint } from './utils'
 import { CHECKOUTS, CheckoutsType } from './constants'
 import { random } from 'lodash'
+import Darts from './Darts'
 
 declare module "react" {
   namespace JSX {
@@ -124,9 +125,9 @@ function App() {
   return (
     <>
       <h2>Checkout: {checkout}</h2>
-      <h4>Darts Remaining: {dartsRemaining}</h4>
+      <Darts dartsRemaining={dartsRemaining} />
       <div style={{ height: '800px', width: '800px' }}>
-        <dartbot-dartboard ref={ref} validate-hits={true} disabled={isDartBoardDisabled}></dartbot-dartboard>
+        <dartbot-dartboard ref={ref} validate-hits={String(true)} disabled={isDartBoardDisabled}></dartbot-dartboard>
       </div>
       <p>
         Min: {minCheckoutValue}

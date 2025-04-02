@@ -192,7 +192,7 @@ export class Dartboard extends HTMLElement {
     } else if (name === "validate-hits") {
       this.validateHits = Boolean(newValue);
     } else if (name === "disabled") {
-      this.validateHits = Boolean(newValue);
+      this.disabled = Boolean(newValue);
     }
   }
 
