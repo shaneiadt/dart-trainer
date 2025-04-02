@@ -4,7 +4,7 @@ import './App.css'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Board, getSectorValue } from './draw-board/board'
 import { PolarPoint } from './utils'
-import { CHECKOUTS, CheckoutsType } from './constants/checkouts'
+import { CHECKOUTS, CheckoutsType } from './constants'
 import { random } from 'lodash'
 
 declare module "react" {
