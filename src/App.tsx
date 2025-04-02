@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import './dartbot-dartboard'
 import './App.css'
-import { useEffect, useRef, useState } from 'react'
-import { Board, getRandomPoint, getSectorValue } from './draw-board/board'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Board, getSectorValue } from './draw-board/board'
 import { PolarPoint } from './utils'
 import { CHECKOUTS, CheckoutsType } from './constants/checkouts'
 import { random } from 'lodash'
@@ -27,17 +27,72 @@ const lastKey = Number(checkoutKeys[checkoutKeys.length - 1]);
 
 function App() {
   const ref = useRef<DBoard | null>(null)
-    const [minCheckoutValue, setCheckoutMinValue] = useState(firstKey);
-    const [maxCheckoutValue, setCheckoutMaxValue] = useState(lastKey);
-  
-    const [showCheckout, setShowCheckout] = useState(false);
-    const [checkout, setCheckout] = useState(firstKey);
-  
-    const calculateCheckout = () => {
-      const rand = random(firstKey, lastKey);
-      setCheckout(rand);
-      setShowCheckout(false);
-    };
+  const [minCheckoutValue, setCheckoutMinValue] = useState(firstKey);
+  const [maxCheckoutValue, setCheckoutMaxValue] = useState(lastKey);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [checkout, setCheckout] = useState(firstKey);
+  const [dartsRemaining, setDartsRemaining] = useState(3);
+
+  const isDartBoardDisabled = dartsRemaining === 0;
+
+  const resetHits = () => {
+    const dartboard = ref.current;
+    const board = dartboard?.board;
+
+    if (!board) {
+      return
+    }
+    dartboard.hits = [];
+  }
+
+  const calculateCheckout = () => {
+    const rand = random(firstKey, lastKey);
+    setCheckout(rand);
+    setShowCheckout(false);
+    setDartsRemaining(3)
+    resetHits()
+  };
+
+
+  const onDartboardClick = useCallback((e: Event) => {
+    const dartboard = ref.current;
+    const board = dartboard?.board;
+
+    if (!board) {
+      return
+    }
+
+    const { detail } = e as CustomEvent<{
+      event: Event;
+      point: {
+        x: number;
+        y: number;
+      };
+      polar: PolarPoint;
+      sector: number;
+      ring: number;
+    }>
+
+    setDartsRemaining((prevState) => prevState - 1)
+
+    dartboard.hits = [...dartboard.hits, detail.polar];
+
+    if (detail.ring === 0) {
+      console.log('BULL HIT');
+      return
+    }
+    if (detail.ring === 1) {
+      console.log('SINGLE BULL HIT');
+      return
+    }
+
+    const multiplier = getMultiplier(detail.ring);
+
+    console.log(`MULTIPLIER: ${multiplier}`);
+
+    const val = getSectorValue(board, detail.sector);
+    console.log(`VALUE: ${val}*${multiplier} = ${val * multiplier}`);
+  }, []);
 
   useEffect(() => {
     if (ref) {
@@ -50,41 +105,10 @@ function App() {
 
       if (!isListenersAttached) {
         isListenersAttached = true;
-        dartboard.addEventListener('dartboard-click', (e) => {
-          const { detail } = e as CustomEvent<{
-            event: Event;
-            point: {
-              x: number;
-              y: number;
-            };
-            polar: PolarPoint;
-            sector: number;
-            ring: number;
-          }>
-          console.log({ detail });
-
-          dartboard.hits = [...dartboard.hits, detail.polar];
-          if (detail.ring === 0) {
-            console.log('BULL HIT');
-            return
-          }
-          if (detail.ring === 1) {
-            console.log('SINGLE BULL HIT');
-            return
-          }
-
-          const multiplier = getMultiplier(detail.ring);
-
-          console.log(`MULTIPLIER: ${multiplier}`);
-
-          const val = getSectorValue(board, detail.sector);
-          console.log(`VALUE: ${val}*${multiplier} = ${val * multiplier}`);
-
-          dartboard.hits = [...dartboard.hits, detail.polar];
-        })
+        dartboard.addEventListener('dartboard-click', onDartboardClick)
       }
     }
-  }, [])
+  }, [onDartboardClick])
 
   const getMultiplier = (ring: number) => {
     if (ring === 3) {
@@ -97,26 +121,13 @@ function App() {
     return 1;
   }
 
-  const createRandomPoint = () => {
-    const dartboard = ref.current;
-    const board = dartboard?.board;
-
-
-    if (!board) {
-      return
-    }
-
-    const randomPoint = getRandomPoint(board, 5, 3, () => 0.9);
-    dartboard.hits = [...dartboard.hits, randomPoint];
-  }
-
   return (
     <>
-      <button onClick={createRandomPoint}>Random Point</button>
+      <h2>Checkout: {checkout}</h2>
+      <h4>Darts Remaining: {dartsRemaining}</h4>
       <div style={{ height: '800px', width: '800px' }}>
-        <dartbot-dartboard ref={ref}></dartbot-dartboard>
+        <dartbot-dartboard ref={ref} validate-hits={true} disabled={isDartBoardDisabled}></dartbot-dartboard>
       </div>
-      <h4>{checkout}</h4>
       <p>
         Min: {minCheckoutValue}
         <input

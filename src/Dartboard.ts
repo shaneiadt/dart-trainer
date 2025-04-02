@@ -1,12 +1,12 @@
-import { createTheme, Token } from './theme';
-import { translateCoords, debounce, PolarPoint, getPolar } from './utils';
+import { createTheme, Token } from "./theme";
+import { translateCoords, debounce, PolarPoint, getPolar } from "./utils";
 import {
   Board,
   createBoard,
   getRingIndexFromPoint,
   getSectorIndexFromPoint,
-} from './draw-board/board';
-import { render } from './draw-board/render';
+} from "./draw-board/board";
+import { render } from "./draw-board/render";
 
 /**
  * Custom pointer event that includes additional detail about what section
@@ -45,7 +45,11 @@ export class Dartboard extends HTMLElement {
 
   #zoom = DEFAULT_ZOOM;
 
-  #fit = 'contain';
+  #validateHits: boolean = false;
+
+  #disabled: boolean = false;
+
+  #fit = "contain";
 
   #centerPoint = { radius: 0, angle: 0 };
 
@@ -69,6 +73,22 @@ export class Dartboard extends HTMLElement {
   set zoom(value: number) {
     this.#zoom = value;
     this.render();
+  }
+
+  get disabled(): boolean {
+    return this.#disabled;
+  }
+
+  set disabled(value: boolean) {
+    this.#disabled = value;
+  }
+
+  get validateHits(): boolean {
+    return this.#validateHits;
+  }
+
+  set validateHits(value: boolean) {
+    this.#validateHits = value;
   }
 
   get centerPoint(): PolarPoint {
@@ -99,14 +119,21 @@ export class Dartboard extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['zoom', 'center-angle', 'center-radius', 'fit'];
+    return [
+      "zoom",
+      "center-angle",
+      "center-radius",
+      "fit",
+      "validate-hits",
+      "disable",
+    ];
   }
 
   constructor() {
     super();
 
     this.#board = createBoard();
-    this.#shadow = this.attachShadow({ mode: 'open' });
+    this.#shadow = this.attachShadow({ mode: "open" });
     this.#shadow.innerHTML = `
       <style>
         :host {
@@ -124,13 +151,13 @@ export class Dartboard extends HTMLElement {
       </style>
       <canvas></canvas>
     `;
-    this.#canvas = this.#shadow.querySelector('canvas')!;
-    this.#canvas.addEventListener('click', this);
+    this.#canvas = this.#shadow.querySelector("canvas")!;
+    this.#canvas.addEventListener("click", this);
 
     const resizeObserver = new ResizeObserver(
       debounce(
         (entries: ResizeObserverEntry[]) => {
-          const entry = entries.find(e => e.target === this)!;
+          const entry = entries.find((e) => e.target === this)!;
           const box = entry.devicePixelContentBoxSize?.[0];
           const boxC = entry.contentBoxSize[0];
           const physical = (n: number) => Math.round(n * devicePixelRatio);
@@ -139,10 +166,10 @@ export class Dartboard extends HTMLElement {
           this.render();
         },
         RESIZE_DEBOUNCE_MS,
-        { leading: true, trailing: true },
-      ),
+        { leading: true, trailing: true }
+      )
     );
-    resizeObserver.observe(this, { box: 'content-box' });
+    resizeObserver.observe(this, { box: "content-box" });
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -150,31 +177,57 @@ export class Dartboard extends HTMLElement {
       return;
     }
 
-    if (name === 'zoom') {
+    if (name === "zoom") {
       this.zoom = parseFloat(newValue);
-    } else if (name === 'center-angle') {
+    } else if (name === "center-angle") {
       const angle = parseFloat(newValue);
       const { radius } = this.#centerPoint;
       this.centerPoint = { radius, angle };
-    } else if (name === 'center-radius') {
+    } else if (name === "center-radius") {
       const radius = parseFloat(newValue);
       const { angle } = this.#centerPoint;
       this.centerPoint = { radius, angle };
-    } else if (name === 'fit') {
+    } else if (name === "fit") {
       this.fit = newValue;
+    } else if (name === "validate-hits") {
+      this.validateHits = Boolean(newValue);
+    } else if (name === "disabled") {
+      this.validateHits = Boolean(newValue);
     }
   }
 
+  isPointInsideCircle(x: number, y: number, cx: number, cy: number, r: number) {
+    // Calculate the squared distance between the point and the center
+    const squaredDistance = (x - cx) * (x - cx) + (y - cy) * (y - cy);
+
+    // Square the radius for comparison
+    const squaredRadius = r * r;
+
+    // Check if the squared distance is less than the squared radius
+    return squaredDistance < squaredRadius;
+  }
+
   handleEvent(event: Event) {
+    if (this.#disabled) {
+      return;
+    }
     switch (event.type) {
-      case 'click':
-      case 'pointerdown':
-      case 'pointerup': {
+      case "click":
+      case "pointerdown":
+      case "pointerup": {
         const { offsetX, offsetY } = event as PointerEvent;
         const { point, polar, sector, ring } = this.translatePoint(
           offsetX,
-          offsetY,
+          offsetY
         );
+
+        if (this.#validateHits) {
+          const sectorRadius = this.#board.rings[this.#board.rings.length - 1];
+          if (!this.isPointInsideCircle(point.x, point.y, 0, 0, sectorRadius)) {
+            return;
+          }
+        }
+
         const name = `dartboard-${event.type}`;
         const detail = { event, point, polar, sector, ring };
         const e = new CustomEvent(name, {
@@ -191,7 +244,7 @@ export class Dartboard extends HTMLElement {
   }
 
   render() {
-    const ctx = this.#canvas.getContext('2d');
+    const ctx = this.#canvas.getContext("2d");
     if (ctx == null) {
       return;
     }
