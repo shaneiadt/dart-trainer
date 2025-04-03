@@ -1,4 +1,4 @@
-import Dart from "./Dart";
+import Dart from "../Dart/Dart";
 
 export interface DartsProps {
     dartsRemaining: number;

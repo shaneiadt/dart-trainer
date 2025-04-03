@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import './dartbot-dartboard'
-import './App.css'
+import '../Dartboard/dartbot-dartboard'
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
-import { Board, getSectorValue } from './draw-board/board'
-import { PolarPoint } from './utils'
-import { CHECKOUTS, CheckoutsType } from './constants'
+import { Board, getSectorValue } from '../Dartboard/draw-board/board'
+import { PolarPoint } from '../Dartboard/utils'
+import { CHECKOUTS, CheckoutsType } from '../../constants'
 import { random } from 'lodash'
-import Darts from './Darts'
-import { useDebounce } from './hooks'
+import Darts from '../Darts/Darts'
+import { useDebounce } from '../../hooks'
 
 declare module "react" {
   namespace JSX {
