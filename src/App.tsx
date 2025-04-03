@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import './dartbot-dartboard'
 import './App.css'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { Board, getSectorValue } from './draw-board/board'
 import { PolarPoint } from './utils'
 import { CHECKOUTS, CheckoutsType } from './constants'
 import { random } from 'lodash'
 import Darts from './Darts'
+import { useDebounce } from './hooks'
 
 declare module "react" {
   namespace JSX {
@@ -31,7 +32,8 @@ function App() {
   const [minCheckoutValue, setCheckoutMinValue] = useState(firstKey);
   const [maxCheckoutValue, setCheckoutMaxValue] = useState(lastKey);
   const [showCheckout, setShowCheckout] = useState(false);
-  const [checkout, setCheckout] = useState(firstKey);
+  const [checkoutSliderError, setCheckoutSliderError] = useState<string | null>(null)
+  const [checkout, setCheckout] = useState(random(firstKey, lastKey));
   const [dartsRemaining, setDartsRemaining] = useState(3);
 
   const isDartBoardDisabled = dartsRemaining === 0;
@@ -48,6 +50,8 @@ function App() {
 
   const calculateCheckout = () => {
     const rand = random(firstKey, lastKey);
+
+    setCheckoutSliderError(null)
     setCheckout(rand);
     setShowCheckout(false);
     setDartsRemaining(3)
@@ -122,6 +126,24 @@ function App() {
     return 1;
   }
 
+  const debouncedCheckoutCalulation = useDebounce(() => {
+    if (minCheckoutValue >= maxCheckoutValue) {
+      setCheckoutSliderError('Invalid Checkout Range')
+    } else {
+      calculateCheckout()
+    }
+  });
+
+  const onMinRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCheckoutMinValue(Number(e.target.value))
+    debouncedCheckoutCalulation()
+  }
+
+  const onMaxRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCheckoutMaxValue(Number(e.target.value))
+    debouncedCheckoutCalulation()
+  }
+
   return (
     <>
       <h2>Checkout: {checkout}</h2>
@@ -129,33 +151,26 @@ function App() {
       <div>
         <dartbot-dartboard ref={ref} validate-hits={String(true)} disabled={isDartBoardDisabled}></dartbot-dartboard>
       </div>
+      {checkoutSliderError && <p>{checkoutSliderError}</p>}
       <p>
         Min: {minCheckoutValue}
         <input
-          onChange={(e) => {
-            setCheckoutMinValue(Number(e.target.value));
-            calculateCheckout();
-          }}
+          onChange={onMinRangeChange}
           type="range"
           step="1"
           id="range"
           name="range"
           value={minCheckoutValue}
           min={firstKey}
-          max={maxCheckoutValue - 1}
         />
         Max: {maxCheckoutValue}
         <input
-          onChange={(e) => {
-            setCheckoutMaxValue(Number(e.target.value));
-            calculateCheckout();
-          }}
+          onChange={onMaxRangeChange}
           type="range"
           step="1"
           id="range"
           name="range"
           value={maxCheckoutValue}
-          min={minCheckoutValue + 1}
           max={lastKey}
         />
       </p>
