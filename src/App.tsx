@@ -126,7 +126,7 @@ function App() {
     <>
       <h2>Checkout: {checkout}</h2>
       <Darts dartsRemaining={dartsRemaining} />
-      <div style={{ height: '800px', width: '800px' }}>
+      <div>
         <dartbot-dartboard ref={ref} validate-hits={String(true)} disabled={isDartBoardDisabled}></dartbot-dartboard>
       </div>
       <p>
