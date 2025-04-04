@@ -6,11 +6,11 @@ export interface DartsProps {
 
 const Darts = ({ dartsRemaining }: DartsProps) => {
     return (
-        <div className='darts'>
+        <>
             <Dart disabled={dartsRemaining <= 2} />
             <Dart disabled={dartsRemaining <= 1} />
             <Dart disabled={dartsRemaining == 0} />
-        </div>
+        </>
     )
 }
 

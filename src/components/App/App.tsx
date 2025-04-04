@@ -25,6 +25,7 @@ let isListenersAttached = false;
 const checkoutKeys = Object.keys(CHECKOUTS).map((n: keyof CheckoutsType) => n);
 const firstKey = Number(checkoutKeys[0]);
 const lastKey = Number(checkoutKeys[checkoutKeys.length - 1]);
+const synth = window.speechSynthesis;
 
 function App() {
   const ref = useRef<DBoard | null>(null)
@@ -48,7 +49,26 @@ function App() {
   }
 
   const calculateCheckout = () => {
-    const rand = random(firstKey, lastKey);
+    const rand = random(minCheckoutValue, maxCheckoutValue);
+
+    const utterThis = new SpeechSynthesisUtterance(`you require ${rand} `);
+
+    utterThis.onend = function (event) {
+      console.log({ event });
+      console.log("SpeechSynthesisUtterance.onend");
+    };
+
+    utterThis.onerror = function (event) {
+      console.log({ event });
+      console.error("SpeechSynthesisUtterance.onerror");
+    };
+
+    const voice = synth.getVoices().find((v) => v.name === 'Google UK English Male')
+    const defaultVoice = synth.getVoices()[0]
+    utterThis.voice = voice ?? defaultVoice;
+    utterThis.pitch = 0;
+    utterThis.rate = 1.1;
+    synth.speak(utterThis);
 
     setCheckoutSliderError(null)
     setCheckout(rand);
@@ -145,39 +165,52 @@ function App() {
 
   return (
     <>
-      <h2>Checkout: {checkout}</h2>
-      <Darts dartsRemaining={dartsRemaining} />
-      <div>
+      <header>
+        <div className='toolbar-primary'>
+          <div className='range'>
+            {minCheckoutValue}
+            <input
+              onChange={onMinRangeChange}
+              type="range"
+              step="1"
+              id="range"
+              name="range"
+              value={minCheckoutValue}
+              min={firstKey}
+            /></div>
+          <div className='checkout'>
+            <h2>{checkout}</h2>
+          </div>
+          <div className='range'>
+            {maxCheckoutValue}
+            <input
+              onChange={onMaxRangeChange}
+              type="range"
+              step="1"
+              id="range"
+              name="range"
+              value={maxCheckoutValue}
+              max={lastKey}
+            />
+          </div>
+        </div>
+        <div className='toolbar-secondary'>
+          <div className='checkout-buttons'>
+            <button onClick={calculateCheckout}>Next Checkout</button>
+            <button onClick={() => setShowCheckout(true)}>Show Checkout</button>
+          </div>
+        </div>
+      </header>
+      <section className='dartboard'>
+        {checkoutSliderError && <p>{checkoutSliderError}</p>}
+        {showCheckout && <p>Checkout: {JSON.stringify(CHECKOUTS[checkout])}</p>}
         <dartbot-dartboard ref={ref} validate-hits={String(true)} disabled={isDartBoardDisabled}></dartbot-dartboard>
-      </div>
-      {checkoutSliderError && <p>{checkoutSliderError}</p>}
-      <p>
-        Min: {minCheckoutValue}
-        <input
-          onChange={onMinRangeChange}
-          type="range"
-          step="1"
-          id="range"
-          name="range"
-          value={minCheckoutValue}
-          min={firstKey}
-        />
-        Max: {maxCheckoutValue}
-        <input
-          onChange={onMaxRangeChange}
-          type="range"
-          step="1"
-          id="range"
-          name="range"
-          value={maxCheckoutValue}
-          max={lastKey}
-        />
-      </p>
-      {showCheckout && <p>Checkout: {JSON.stringify(CHECKOUTS[checkout])}</p>}
-      <p>
-        <button onClick={calculateCheckout}>Next Checkout</button>
-        <button onClick={() => setShowCheckout(true)}>Show Checkout</button>
-      </p>
+      </section>
+      <footer>
+        <div className='darts'>
+          <Darts dartsRemaining={dartsRemaining} />
+        </div>
+      </footer>
     </>
   )
 }

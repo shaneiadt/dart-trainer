@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #011d0b;
+  background-color: #26251d;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -16,7 +16,6 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -37,11 +36,6 @@ body {
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -49,7 +43,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #646cff;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -62,6 +56,67 @@ button:focus-visible {
 }
 
 .dart {
-  display: inline-block;
-  width: 40px;
+  width: 30px;
+  height: 30px;
+}
+
+header {
+  position:fixed;
+
+}
+
+header .toolbar-primary {
+  width: 100vw;
+  background: #011d0b;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+footer {
+  position:fixed;
+  width: 100vw;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+footer .darts {
+  display: flex;
+  padding: 0.2rem;
+  border-radius: 20px 20px 0px 0px;
+  background: #011d0b;
+  padding: 0.5rem 1rem;
+}
+
+.dartboard {
+  padding-top: 150px;
+}
+
+.toolbar-primary .checkout {
+  width: 100px;
+  font-size: 1.2rem;
+  background-color: #011006;
+}
+.toolbar-primary .checkout h2 {
+  margin: 1rem;
+}
+
+.toolbar-secondary {
+  display: flex;
+}
+
+.toolbar-secondary .checkout-buttons {
+  background-color: #646cff;
+  margin: auto;
+  min-width: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #011d0b;
+  padding: 1rem 0.5rem;
+  border-radius: 0px 0px 20px 20px;
 }
