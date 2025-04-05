@@ -38,7 +38,9 @@ const Header = ({ checkout, minCheckoutValue, maxCheckoutValue, calculateCheckou
         <header>
             <div className='toolbar-primary'>
                 <div className='range'>
-                    {minCheckoutValue}
+                    <div>
+                        {minCheckoutValue}
+                    </div>
                     <input
                         onChange={onMinRangeChange}
                         type="range"
@@ -52,7 +54,9 @@ const Header = ({ checkout, minCheckoutValue, maxCheckoutValue, calculateCheckou
                     <h2>{checkout}</h2>
                 </div>
                 <div className='range'>
-                    {maxCheckoutValue}
+                    <div>
+                        {maxCheckoutValue}
+                    </div>
                     <input
                         onChange={onMaxRangeChange}
                         type="range"

@@ -19,15 +19,6 @@
   text-align: center;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
   display: flex;
@@ -47,11 +38,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border-color: #fff;
 }
 
 .dart {
@@ -60,8 +47,7 @@ button:focus-visible {
 }
 
 header {
-  position:fixed;
-
+  position: fixed;
 }
 
 header .toolbar-primary {
@@ -74,7 +60,7 @@ header .toolbar-primary {
 }
 
 footer {
-  position:fixed;
+  position: fixed;
   width: 100%;
   bottom: 0;
   display: flex;
@@ -110,11 +96,16 @@ footer .darts {
 .toolbar-secondary .checkout-buttons {
   background-color: #646cff;
   margin: auto;
-  min-width: 350px;
   display: flex;
   align-items: center;
   justify-content: space-around;
   background-color: #011d0b;
-  padding: 1rem 0.5rem;
+  padding: 1rem 1rem;
   border-radius: 0px 0px 20px 20px;
+}
+
+@media screen and (max-width: 400px) {
+  .range input {
+    width: 50%;
+  }
 }
