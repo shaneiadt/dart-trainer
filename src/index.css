@@ -75,7 +75,7 @@ header .toolbar-primary {
 
 footer {
   position:fixed;
-  width: 100vw;
+  width: 100%;
   bottom: 0;
   display: flex;
   align-items: center;
@@ -85,10 +85,9 @@ footer {
 
 footer .darts {
   display: flex;
-  padding: 0.2rem;
   border-radius: 20px 20px 0px 0px;
   background: #011d0b;
-  padding: 0.5rem 1rem;
+  padding: 5px 15px;
 }
 
 .dartboard {

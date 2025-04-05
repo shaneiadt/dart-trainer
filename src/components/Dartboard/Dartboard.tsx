@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import { createTheme, Token } from "./theme";
 import { translateCoords, debounce, PolarPoint, getPolar } from "./utils";
 import {
@@ -7,6 +8,7 @@ import {
   getSectorIndexFromPoint,
 } from "./draw-board/board";
 import { render } from "./draw-board/render";
+import { HTMLAttributes, RefAttributes } from "react";
 
 /**
  * Custom pointer event that includes additional detail about what section
@@ -37,6 +39,14 @@ export type DartboardPointerEvent = CustomEvent<{
 const RESIZE_DEBOUNCE_MS = 100;
 
 const DEFAULT_ZOOM = 0;
+
+declare module "react/jsx-runtime" {
+  namespace JSX {
+    interface IntrinsicElements {
+      "dartbot-dartboard": RefAttributes<Dartboard> & HTMLAttributes<Dartboard> & { disabled: boolean };
+    }
+  }
+}
 
 export class Dartboard extends HTMLElement {
   #canvas: HTMLCanvasElement;
