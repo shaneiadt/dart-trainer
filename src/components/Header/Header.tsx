@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, ReactElement, useMemo, useState } from "react";
 import { useDebounce } from "../../hooks";
 import { CHECKOUTS, CheckoutsType } from "../../constants";
 
@@ -16,11 +16,13 @@ const firstKey = Number(checkoutKeys[0]);
 const lastKey = Number(checkoutKeys[checkoutKeys.length - 1]);
 
 const Header = ({ checkout, minCheckoutValue, maxCheckoutValue, calculateCheckout, setCheckoutMinValue, setCheckoutMaxValue }: HeaderProps) => {
+    const [error, setError] = useState<string | null>(null)
+    const [showCheckoutPath, setShowCheckoutPath] = useState<boolean | null>(false)
     const debouncedCheckoutCalulation = useDebounce(() => {
         if (minCheckoutValue >= maxCheckoutValue) {
-            // setCheckoutSliderError('Invalid Checkout Range')
-            console.log('TODO: Invalid Checkout Range');
+            setError('Invalid Checkout Range');
         } else {
+            setError(null);
             calculateCheckout()
         }
     });
@@ -34,6 +36,29 @@ const Header = ({ checkout, minCheckoutValue, maxCheckoutValue, calculateCheckou
         setCheckoutMaxValue(Number(e.target.value))
         debouncedCheckoutCalulation()
     }
+
+    const checkoutPaths = useMemo(() => {
+        const outs = CHECKOUTS[checkout]
+        const paths: ReactElement[] = []
+
+        let i = 0;
+
+        if (outs?.length) {
+            for (const out of outs) {
+                const pathItems: ReactElement[] = []
+
+                for (const key of out) {
+                    const itemKey = `${key}-${i++}`
+                    pathItems.push(<span key={itemKey}>{key}</span>);
+                }
+
+                paths.push(<div key={`path-${i}`} className="checkout-path">{pathItems}</div>)
+            }
+        }
+
+        return paths
+    }, [checkout]);
+
     return (
         <header>
             <div className='toolbar-primary'>
@@ -69,9 +94,11 @@ const Header = ({ checkout, minCheckoutValue, maxCheckoutValue, calculateCheckou
                 </div>
             </div>
             <div className='toolbar-secondary'>
+                {error && <div className="error">{error}</div>}
+                {showCheckoutPath && <div className="checkout-paths">{checkoutPaths}</div>}
                 <div className='checkout-buttons'>
-                    <button onClick={calculateCheckout}>Next Checkout</button>
-                    {/* <button onClick={() => setShowCheckout(true)}>Show Checkout</button> */}
+                    <button onClick={() => setShowCheckoutPath(!showCheckoutPath)}>{showCheckoutPath ? 'Hide' : 'Show'} Checkout</button>
+                    <button onClick={() => { setShowCheckoutPath(false); calculateCheckout() }}>Next Checkout</button>
                 </div>
             </div>
         </header>

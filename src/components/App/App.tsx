@@ -2,7 +2,7 @@ import '../Dartboard/dartbot-dartboard'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { getSectorValue } from '../Dartboard/draw-board/board'
 import { PolarPoint } from '../Dartboard/utils'
-import { CHECKOUTS, CheckoutsType } from '../../constants'
+import { BOARD_VALUES, CHECKOUTS, CheckoutsType, SectorNumbers } from '../../constants'
 import { random } from 'lodash'
 import Darts from '../Darts/Darts'
 import { useSpeech } from '../../hooks'
@@ -21,6 +21,7 @@ function App() {
   const [maxCheckoutValue, setCheckoutMaxValue] = useState(lastKey);
   const [checkout, setCheckout] = useState(random(firstKey, lastKey));
   const [dartsRemaining, setDartsRemaining] = useState(3);
+  const [selectedCheckoutPath, setSelectedCheckoutPath] = useState<(keyof typeof BOARD_VALUES)[]>([]);
 
   const isDartBoardDisabled = dartsRemaining === 0;
 
@@ -39,7 +40,7 @@ function App() {
 
     sayCheckoutRequirement(rand)
     setCheckout(rand);
-    console.log({ checkout: rand }, JSON.stringify(CHECKOUTS[rand]));
+    setSelectedCheckoutPath([])
     setDartsRemaining(3)
     resetHits()
   };
@@ -69,21 +70,36 @@ function App() {
     dartboard.hits = [...dartboard.hits, detail.polar];
 
     if (detail.ring === 0) {
-      console.log('BULL HIT');
+      setSelectedCheckoutPath((prevState) => [...prevState, 'DB']);
       return
     }
     if (detail.ring === 1) {
-      console.log('SINGLE BULL HIT');
+      setSelectedCheckoutPath((prevState) => [...prevState, 'SB']);
       return
     }
 
     const multiplier = getMultiplier(detail.ring);
-
-    console.log(`MULTIPLIER: ${multiplier}`);
-
     const val = getSectorValue(board, detail.sector);
-    console.log(`VALUE: ${val}*${multiplier} = ${val * multiplier}`);
+    const boardKey = getBoardKey(val as SectorNumbers, multiplier)
+
+    setSelectedCheckoutPath((prevState) => [...prevState, boardKey]);
   }, []);
+
+  console.log({ selectedCheckoutPath });
+
+  const getBoardKey = (val: SectorNumbers, multiplier: number): keyof typeof BOARD_VALUES => {
+    let sym: keyof typeof BOARD_VALUES = `S${val}`;
+
+    if (multiplier === 3) {
+      sym = `T${val}`;
+    } else if (multiplier === 2) {
+      sym = `D${val}`
+    }
+
+    console.log(sym);
+
+    return sym
+  }
 
   useEffect(() => {
     if (ref) {
@@ -121,6 +137,15 @@ function App() {
         calculateCheckout={calculateCheckout}
         setCheckoutMinValue={setCheckoutMinValue}
         setCheckoutMaxValue={setCheckoutMaxValue} />
+      {/* TODO: DIALOG FOR SETTING */}
+      {/* <div style={{ position: 'absolute', top: 0, left: 0, width: '100vw', height: '100%' }}>
+        <div style={{ display: 'flex', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+          <dialog open>
+            <button>Close</button>
+            <p>This modal dialog has a groovy backdrop!</p>
+          </dialog>
+        </div>
+      </div> */}
       <section className='dartboard'>
         <dartbot-dartboard ref={ref} validate-hits={String(true)} disabled={isDartBoardDisabled}></dartbot-dartboard>
       </section>

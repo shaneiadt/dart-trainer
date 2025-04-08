@@ -84,25 +84,50 @@ footer .darts {
 .toolbar-primary .checkout {
   width: 100px;
   font-size: 1.2rem;
-  background-color: #011006;
+  background-color: #225521;
 }
 .toolbar-primary .checkout h2 {
   margin: 1rem;
-}
-
-.toolbar-secondary {
-  display: flex;
 }
 
 .toolbar-secondary .checkout-buttons {
   background-color: #646cff;
   margin: auto;
   display: flex;
+  width: 320px;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   background-color: #011d0b;
   padding: 1rem 1rem;
   border-radius: 0px 0px 20px 20px;
+}
+
+.toolbar-secondary .checkout-paths {
+  background-color: #011006;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+.toolbar-secondary .checkout-path {
+  padding: 0.5rem;
+  background: #225521;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-weight: bold;
+}
+.toolbar-secondary .checkout-path span {
+  margin: 0 5px;
+}
+
+.toolbar-secondary .error {
+  background-color: darkred;
+}
+
+dialog::backdrop {
+  background-color: salmon;
 }
 
 @media screen and (max-width: 400px) {
