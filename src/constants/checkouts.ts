@@ -1,6 +1,6 @@
-import { BOARD_VALUES } from "./values";
+import { BoardKey } from "./values";
 
-export type CheckoutsType = Record<string, (keyof typeof BOARD_VALUES)[][]>;
+export type CheckoutsType = Record<string, BoardKey[][]>;
 
 export const CHECKOUTS: CheckoutsType = {
   2: [["D1"]],

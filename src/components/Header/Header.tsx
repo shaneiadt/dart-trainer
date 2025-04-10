@@ -1,39 +1,40 @@
 import { ChangeEvent, ReactElement, useMemo, useState } from "react";
 import { useDebounce } from "../../hooks";
 import { CHECKOUTS, CheckoutsType } from "../../constants";
-
-export interface HeaderProps {
-    calculateCheckout: () => void;
-    setCheckoutMinValue: (value: number) => void;
-    setCheckoutMaxValue: (value: number) => void;
-    minCheckoutValue: number;
-    maxCheckoutValue: number;
-    checkout: number;
-}
+import { useAppDispatch, useAppSelector } from "../../store";
+import { calculateCheckout, setMaxCheckoutValue, setMinCheckoutValue, showPath } from "../../features/checkout/checkoutSlice";
+import { getCheckoutValue, getMaxCheckoutValue, getMinCheckoutValue, getShowPath } from "../../features/checkout/selectors";
 
 const checkoutKeys = Object.keys(CHECKOUTS).map((n: keyof CheckoutsType) => n);
 const firstKey = Number(checkoutKeys[0]);
 const lastKey = Number(checkoutKeys[checkoutKeys.length - 1]);
 
-const Header = ({ checkout, minCheckoutValue, maxCheckoutValue, calculateCheckout, setCheckoutMinValue, setCheckoutMaxValue }: HeaderProps) => {
+const Header = () => {
     const [error, setError] = useState<string | null>(null)
-    const [showCheckoutPath, setShowCheckoutPath] = useState<boolean | null>(false)
+
+    const dispatch = useAppDispatch()
+    const checkout = useAppSelector(getCheckoutValue)
+    const minCheckoutValue = useAppSelector(getMinCheckoutValue)
+    const maxCheckoutValue = useAppSelector(getMaxCheckoutValue)
+    const showCheckoutPath = useAppSelector(getShowPath)
+
+    // TODO: Debounce this with listener middleware
     const debouncedCheckoutCalulation = useDebounce(() => {
         if (minCheckoutValue >= maxCheckoutValue) {
             setError('Invalid Checkout Range');
         } else {
             setError(null);
-            calculateCheckout()
+            dispatch(calculateCheckout())
         }
     });
 
     const onMinRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setCheckoutMinValue(Number(e.target.value))
+        dispatch(setMinCheckoutValue(Number(e.target.value)))
         debouncedCheckoutCalulation()
     }
 
     const onMaxRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setCheckoutMaxValue(Number(e.target.value))
+        dispatch(setMaxCheckoutValue(Number(e.target.value)))
         debouncedCheckoutCalulation()
     }
 
@@ -58,6 +59,9 @@ const Header = ({ checkout, minCheckoutValue, maxCheckoutValue, calculateCheckou
 
         return paths
     }, [checkout]);
+
+    const onToggleCheckoutClick = () => dispatch(showPath(!showCheckoutPath));
+    const onNextCheckoutClick = () => dispatch(calculateCheckout());
 
     return (
         <header>
@@ -97,8 +101,8 @@ const Header = ({ checkout, minCheckoutValue, maxCheckoutValue, calculateCheckou
                 {error && <div className="error">{error}</div>}
                 {showCheckoutPath && <div className="checkout-paths">{checkoutPaths}</div>}
                 <div className='checkout-buttons'>
-                    <button onClick={() => setShowCheckoutPath(!showCheckoutPath)}>{showCheckoutPath ? 'Hide' : 'Show'} Checkout</button>
-                    <button onClick={() => { setShowCheckoutPath(false); calculateCheckout() }}>Next Checkout</button>
+                    <button onClick={onToggleCheckoutClick}>{showCheckoutPath ? 'Hide' : 'Show'} Checkout</button>
+                    <button onClick={onNextCheckoutClick}>Next Checkout</button>
                 </div>
             </div>
         </header>

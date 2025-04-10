@@ -20,6 +20,8 @@ export type SectorNumbers =
   | 19
   | 20;
 
+export type BoardKey = keyof typeof BOARD_VALUES;
+
 export type BoardValues = Record<
   `S${SectorNumbers}` | `D${SectorNumbers}` | `T${SectorNumbers}` | "DB" | "SB",
   number
