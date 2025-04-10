@@ -2,8 +2,6 @@
 
 Practice your darts checkout knowledge :dart:
 
-[INSERT IMG HERE]
-
 # Technologies
 
 - React
