@@ -1,9 +1,12 @@
-import { ChangeEvent, ReactElement, useMemo, useState } from "react";
+import { ChangeEvent, ReactElement, useEffect, useMemo, useState } from "react";
 import { useDebounce } from "../../hooks";
 import { CHECKOUTS, CheckoutsType } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { calculateCheckout, setMaxCheckoutValue, setMinCheckoutValue, showPath } from "../../features/checkout/checkoutSlice";
-import { getCheckoutValue, getMaxCheckoutValue, getMinCheckoutValue, getShowPath } from "../../features/checkout/selectors";
+import { getCheckoutValue, getIsCheckedOut, getIsLastDartDouble, getMaxCheckoutValue, getMinCheckoutValue, getShowPath, getUserCheckoutPath, getUserCheckoutValue } from "../../features/checkout/selectors";
+import { resetHitsState } from "../../features/hits/hitsSlice";
+import { isEqual } from "lodash";
+import cn from "classnames";
 
 const checkoutKeys = Object.keys(CHECKOUTS).map((n: keyof CheckoutsType) => n);
 const firstKey = Number(checkoutKeys[0]);
@@ -17,6 +20,18 @@ const Header = () => {
     const minCheckoutValue = useAppSelector(getMinCheckoutValue)
     const maxCheckoutValue = useAppSelector(getMaxCheckoutValue)
     const showCheckoutPath = useAppSelector(getShowPath)
+    const userCheckoutValue = useAppSelector(getUserCheckoutValue)
+    const userCheckoutPath = useAppSelector(getUserCheckoutPath)
+
+    const isLastDartDouble = useAppSelector(getIsLastDartDouble)
+
+    const checkedOut = useAppSelector(getIsCheckedOut);
+
+    useEffect(() => {
+        if (checkedOut) {
+            console.log('CHECKED OUT');
+        }
+    }, [checkedOut, checkout, isLastDartDouble, userCheckoutPath, userCheckoutValue])
 
     // TODO: Debounce this with listener middleware
     const debouncedCheckoutCalulation = useDebounce(() => {
@@ -48,20 +63,28 @@ const Header = () => {
             for (const out of outs) {
                 const pathItems: ReactElement[] = []
 
+                if (out.join('') === userCheckoutPath.join('')) {
+                    console.log('CHECKOUT PATH MATCH', { out });
+                    console.log(out);
+                }
+
                 for (const key of out) {
                     const itemKey = `${key}-${i++}`
                     pathItems.push(<span key={itemKey}>{key}</span>);
                 }
 
-                paths.push(<div key={`path-${i}`} className="checkout-path">{pathItems}</div>)
+                paths.push(<div key={`path-${i}`} className={cn("checkout-path", { 'checkout-path--match': isEqual(out, userCheckoutPath) })}>{pathItems}</div>)
             }
         }
 
         return paths
-    }, [checkout]);
+    }, [checkout, userCheckoutPath]);
 
     const onToggleCheckoutClick = () => dispatch(showPath(!showCheckoutPath));
-    const onNextCheckoutClick = () => dispatch(calculateCheckout());
+    const onNextCheckoutClick = () => {
+        dispatch(calculateCheckout());
+        dispatch(resetHitsState())
+    };
 
     return (
         <header>

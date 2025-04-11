@@ -118,6 +118,10 @@ footer .darts {
   color: #fff;
   font-weight: bold;
 }
+.toolbar-secondary .checkout-path--match {
+  background-color: #fff;
+  color: #225521;
+}
 .toolbar-secondary .checkout-path span {
   margin: 0 5px;
 }
