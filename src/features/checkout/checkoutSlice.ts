@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BoardKey, CHECKOUTS, CheckoutsType } from "../../constants";
 import { random } from "lodash";
-import { getDartboardElement } from "../../components/Dartboard";
 
 export interface CheckoutState {
   checkout: number;
@@ -55,12 +54,6 @@ const { reducer, actions } = createSlice({
       state.checkout = rand;
       state.path = [];
       state.showPath = false;
-
-      const dartboard = getDartboardElement();
-
-      if (dartboard) {
-        dartboard.hits = [];
-      }
     },
   },
 });

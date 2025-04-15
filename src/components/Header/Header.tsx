@@ -2,9 +2,8 @@ import { ChangeEvent, ReactElement, useEffect, useMemo, useState } from "react";
 import { useDebounce } from "../../hooks";
 import { CHECKOUTS, CheckoutsType } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { calculateCheckout, setMaxCheckoutValue, setMinCheckoutValue, showPath } from "../../features/checkout/checkoutSlice";
+import { calculateCheckout, resetPath, setMaxCheckoutValue, setMinCheckoutValue, showPath } from "../../features/checkout/checkoutSlice";
 import { getCheckoutValue, getIsCheckedOut, getIsLastDartDouble, getMaxCheckoutValue, getMinCheckoutValue, getShowPath, getUserCheckoutPath, getUserCheckoutValue } from "../../features/checkout/selectors";
-import { resetHitsState } from "../../features/hits/hitsSlice";
 import { isEqual } from "lodash";
 import cn from "classnames";
 
@@ -83,7 +82,7 @@ const Header = () => {
     const onToggleCheckoutClick = () => dispatch(showPath(!showCheckoutPath));
     const onNextCheckoutClick = () => {
         dispatch(calculateCheckout());
-        dispatch(resetHitsState())
+        dispatch(resetPath())
     };
 
     return (

@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import hitsReducer from "./features/hits/hitsSlice";
 import checkoutReducer from "./features/checkout/checkoutSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 export const store = configureStore({
   reducer: {
-    hits: hitsReducer,
-    checkout: checkoutReducer,
+    checkoutTrainer: checkoutReducer,
   },
 });
 

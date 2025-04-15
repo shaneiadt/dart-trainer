@@ -1,10 +1,11 @@
+import { getDartsRemaining } from "../../features/checkout/selectors";
+import { useAppSelector } from "../../store";
 import Dart from "../Dart/Dart";
 
-export interface DartsProps {
-    dartsRemaining: number;
-}
 
-const Darts = ({ dartsRemaining }: DartsProps) => {
+const Darts = () => {
+    const dartsRemaining = useAppSelector(getDartsRemaining);
+
     return (
         <>
             <Dart disabled={dartsRemaining <= 2} />

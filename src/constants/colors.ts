@@ -1,0 +1,8 @@
+export const BG_COLOR = "#090a0a"
+export const BLACK_SECTOR_COLOR = "#222323"
+export const RED_SECTOR_COLOR = "#e51f28"
+export const WHITE_SECTOR_COLOR = "#fff"
+export const GREEN_SECTOR_COLOR = "#42d153"
+export const OUTER_RING_COLOR = "#dae8e8"
+export const WIRE_COLOR = "#e4f2f2"
+export const HIGHLIGHT_COLOR = "#646cff"

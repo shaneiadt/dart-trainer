@@ -1,24 +1,31 @@
 import { BOARD_VALUES } from "../../constants";
 import { RootState } from "../../store";
 
+export const getCheckoutTrainerState = (state: RootState) =>
+  state.checkoutTrainer;
 export const getMinCheckoutValue = (state: RootState) =>
-  state.checkout.minCheckoutValue;
+  getCheckoutTrainerState(state).minCheckoutValue;
 
 export const getMaxCheckoutValue = (state: RootState) =>
-  state.checkout.maxCheckoutValue;
+  getCheckoutTrainerState(state).maxCheckoutValue;
 
-export const getCheckoutValue = (state: RootState) => state.checkout.checkout;
+export const getCheckoutValue = (state: RootState) =>
+  getCheckoutTrainerState(state).checkout;
 
-export const getShowPath = (state: RootState) => state.checkout.showPath;
+export const getShowPath = (state: RootState) =>
+  getCheckoutTrainerState(state).showPath;
 
-export const getUserCheckoutPath = (state: RootState) => state.checkout.path;
+export const getUserCheckoutPath = (state: RootState) =>
+  getCheckoutTrainerState(state).path;
 
 export const getIsLastDartDouble = (state: RootState): boolean =>
-  !!state.checkout.path[state.checkout.path.length - 1]?.includes("D");
+  !!getCheckoutTrainerState(state).path[
+    getCheckoutTrainerState(state).path.length - 1
+  ]?.includes("D");
 
 export const getUserCheckoutValue = (state: RootState) =>
-  state.checkout.path
-    .map((bk) => BOARD_VALUES[bk])
+  getCheckoutTrainerState(state)
+    .path.map((bk) => BOARD_VALUES[bk])
     .reduce((pv, cv) => pv + cv, 0);
 
 export const getIsCheckedOut = (state: RootState) => {
@@ -28,3 +35,9 @@ export const getIsCheckedOut = (state: RootState) => {
 
   return isLastDartDouble && userCheckoutValue === checkout;
 };
+
+export const getIsDartboardDisabled = (state: RootState) =>
+  getCheckoutTrainerState(state).path.length === 3 || getIsCheckedOut(state);
+
+export const getDartsRemaining = (state: RootState) =>
+  3 - (getUserCheckoutPath(state).length);
