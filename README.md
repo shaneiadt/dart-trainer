@@ -8,3 +8,4 @@ Practice your darts checkout knowledge :dart:
 - Typescript
 - Vite
 - Redux Toolkit
+- TailwindCSS
