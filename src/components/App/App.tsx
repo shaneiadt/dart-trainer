@@ -6,11 +6,11 @@ function App() {
   return (
     <>
       <Header />
-      <section className='dartboard'>
+      <section className='sm:pt-20 md:pt-[100px]'>
         <Dartboard />
       </section>
-      <footer>
-        <div className='darts'>
+      <footer className='fixed w-full flex items-center justify-evenly content-center bottom-0'>
+        <div className='bg-green-950 flex px-[15px] py-[5px] rounded-[20px_20px_0px_0px]'>
           <Darts />
         </div>
       </footer>

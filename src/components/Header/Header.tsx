@@ -11,8 +11,10 @@ const checkoutKeys = Object.keys(CHECKOUTS).map((n: keyof CheckoutsType) => n);
 const firstKey = Number(checkoutKeys[0]);
 const lastKey = Number(checkoutKeys[checkoutKeys.length - 1]);
 
+type MessageType = 'success' | 'error'
+
 const Header = () => {
-    const [error, setError] = useState<string | null>(null)
+    const [message, setMessage] = useState<{ text: string; type: MessageType } | null>(null)
 
     const dispatch = useAppDispatch()
     const checkout = useAppSelector(getCheckoutValue)
@@ -35,9 +37,9 @@ const Header = () => {
     // TODO: Debounce this with listener middleware
     const debouncedCheckoutCalulation = useDebounce(() => {
         if (minCheckoutValue >= maxCheckoutValue) {
-            setError('Invalid Checkout Range');
+            setMessage({ text: 'Min must be less than Max', type: 'error' });
         } else {
-            setError(null);
+            setMessage(null);
             dispatch(calculateCheckout())
         }
     });
@@ -69,10 +71,10 @@ const Header = () => {
 
                 for (const key of out) {
                     const itemKey = `${key}-${i++}`
-                    pathItems.push(<span key={itemKey}>{key}</span>);
+                    pathItems.push(<span className="m-1" key={itemKey}>{key}</span>);
                 }
 
-                paths.push(<div key={`path-${i}`} className={cn("checkout-path", { 'checkout-path--match': isEqual(out, userCheckoutPath) })}>{pathItems}</div>)
+                paths.push(<div key={`path-${i}`} className={cn("bg-green-800 p-2 rounded-lg", { 'text-green-950': isEqual(out, userCheckoutPath), 'bg-white': isEqual(out, userCheckoutPath) })}>{pathItems}</div>)
             }
         }
 
@@ -86,9 +88,9 @@ const Header = () => {
     };
 
     return (
-        <header>
-            <div className='toolbar-primary'>
-                <div className='range'>
+        <header className="fixed">
+            <div className='flex w-screen items-center justify-evenly content-center bg-green-950'>
+                <div className='pt-2 pb-2'>
                     <div>
                         {minCheckoutValue}
                     </div>
@@ -101,10 +103,10 @@ const Header = () => {
                         value={minCheckoutValue}
                         min={firstKey}
                     /></div>
-                <div className='checkout'>
+                <div className='w-20 text-2xl bg-green-800 self-stretch content-center'>
                     <h2>{checkout}</h2>
                 </div>
-                <div className='range'>
+                <div className='pt-2 pb-2'>
                     <div>
                         {maxCheckoutValue}
                     </div>
@@ -119,12 +121,12 @@ const Header = () => {
                     />
                 </div>
             </div>
-            <div className='toolbar-secondary'>
-                {error && <div className="error">{error}</div>}
-                {showCheckoutPath && <div className="checkout-paths">{checkoutPaths}</div>}
-                <div className='checkout-buttons'>
-                    <button onClick={onToggleCheckoutClick}>{showCheckoutPath ? 'Hide' : 'Show'} Checkout</button>
-                    <button onClick={onNextCheckoutClick}>Next Checkout</button>
+            <div>
+                {message && <div className={cn('p-2',{ "bg-red-800": message.type === 'error', "bg-green-800": message.type === 'success' })}>{message.text}</div>}
+                {showCheckoutPath && <div className="bg-[#011006] flex items-center justify-center gap-4 p-2">{checkoutPaths}</div>}
+                <div className='bg-green-950 flex w-80 items-center justify-between m-auto p-4 rounded-[0px_0px_20px_20px]'>
+                    <button className="bg-purple-600 rounded-sm p-3 cursor-pointer hover:bg-white hover:text-purple-600 transition-colors" onClick={onToggleCheckoutClick}>{showCheckoutPath ? 'Hide' : 'Show'} Checkout</button>
+                    <button className="bg-purple-600 rounded-sm p-3 cursor-pointer hover:bg-white hover:text-purple-600 transition-colors" onClick={onNextCheckoutClick}>Next Checkout</button>
                 </div>
             </div>
         </header>
