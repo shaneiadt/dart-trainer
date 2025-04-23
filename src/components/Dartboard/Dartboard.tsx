@@ -5,7 +5,8 @@ import { BoardKey, SECTOR_COLORS } from "../../constants"
 import { addPath } from "../../features/checkout/checkoutSlice"
 import { getIsDartboardDisabled, getUserCheckoutPath } from "../../features/checkout/selectors"
 import { isTouchEvent } from "./utils"
-import { useIsMobile } from "../../hooks"
+import { Pointers } from "../../hooks/usePrimaryPointerQuery"
+import { useAnyPointerQuery } from "../../hooks/useAnyPointerQuery"
 
 export interface DartboardSVGProps {
     disabled?: boolean
@@ -14,15 +15,19 @@ export interface DartboardSVGProps {
 const Dartboard = () => {
     const dispatch = useAppDispatch();
 
-    const isMobile = useIsMobile();
-
     const isDartBoardDisabled = useAppSelector(getIsDartboardDisabled);
     const userCheckoutPath = useAppSelector(getUserCheckoutPath);
 
     const [mouseEnter, setMouseEnter] = useState<BoardKey | null>(null)
     const [isMouseDown, setIsMouseDown] = useState(false)
 
+    // https://dev.to/morewings/how-to-detect-touch-devices-using-browser-media-queries-1kbm
 
+    // const primaryPointer = usePrimaryPointerQuery();
+    const hasCoarse = useAnyPointerQuery(Pointers.coarse);
+    // const hasFine = useAnyPointerQuery(Pointers.fine);
+    // const hasVoice = useAnyPointerQuery(Pointers.none);
+    // const hasStylus = useAnyStylusQuery();
 
     const onMouseEnter = (e: React.MouseEvent) => {
         if (isDartBoardDisabled || !e.target) {
@@ -40,7 +45,7 @@ const Dartboard = () => {
     }
 
     const onMouseDown = () => {
-        if (isDartBoardDisabled || isMobile) {
+        if (isDartBoardDisabled || hasCoarse) {
             return;
         }
 
@@ -48,7 +53,7 @@ const Dartboard = () => {
     }
 
     const onMouseUp = (e: React.MouseEvent) => {
-        if (isDartBoardDisabled || !e.target || !isMouseDown || isMobile) {
+        if (isDartBoardDisabled || !e.target || !isMouseDown || hasCoarse) {
             return;
         }
 
@@ -84,7 +89,7 @@ const Dartboard = () => {
 
 
     const onTouchStart = (e: React.TouchEvent) => {
-        if (!isMobile || isDartBoardDisabled || !e.target || !isTouchEvent(e)) {
+        if (!hasCoarse || isDartBoardDisabled || !e.target || !isTouchEvent(e)) {
             return;
         }
 
@@ -93,7 +98,7 @@ const Dartboard = () => {
         setMouseEnter(value)
     }
     const onTouchMove = (e: React.TouchEvent) => {
-        if (!isMobile || isDartBoardDisabled || !e.target) {
+        if (!hasCoarse || isDartBoardDisabled || !e.target) {
             return;
         }
 
@@ -116,7 +121,7 @@ const Dartboard = () => {
         }
     }
     const onTouchEnd = (e: React.TouchEvent) => {
-        if (!isMobile || isDartBoardDisabled || !e.target || !isMouseDown) {
+        if (!hasCoarse || isDartBoardDisabled || !e.target || !isMouseDown) {
             return;
         }
 
@@ -126,16 +131,16 @@ const Dartboard = () => {
         }
     }
     return (
-        <section className='sm:pt-20 md:pt-[100px]'
+        <section
+            className='h-full flex items-center justify-center pt-10'
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 2000 2000"
-                style={{ height: "100vh", width: "100vw" }}
-                className="fill-black"
+                viewBox="0 0 2020 2020"
+                className="fill-black w-250 h-250"
             >
                 <circle onMouseLeave={resetIsMouseDown} className="fill-gray-800" cx="1010.23" cy="1010.23" r="1004" />
                 <circle className="fill-black" cx="1010.23" cy="1010.23" r="959" />

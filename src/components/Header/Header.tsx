@@ -1,11 +1,11 @@
 import { ChangeEvent, ReactElement, useEffect, useMemo, useState } from "react";
-import { useDebounce } from "../../hooks";
 import { CHECKOUTS, CheckoutsType } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { calculateCheckout, resetPath, setMaxCheckoutValue, setMinCheckoutValue, showPath } from "../../features/checkout/checkoutSlice";
 import { getCheckoutValue, getIsCheckedOut, getIsLastDartDouble, getMaxCheckoutValue, getMinCheckoutValue, getShowPath, getUserCheckoutPath, getUserCheckoutValue } from "../../features/checkout/selectors";
 import { isEqual } from "lodash";
 import cn from "classnames";
+import { useDebounce } from "../../hooks/useDebounce";
 
 const checkoutKeys = Object.keys(CHECKOUTS).map((n: keyof CheckoutsType) => n);
 const firstKey = Number(checkoutKeys[0]);
@@ -54,6 +54,20 @@ const Header = () => {
         debouncedCheckoutCalulation()
     }
 
+    const isUserPathValidCheckout = useMemo(() => {
+        const outs = CHECKOUTS[checkout]
+
+        if (outs?.length) {
+            for (const out of outs) {
+                if (out.join('') === userCheckoutPath.join('')) {
+                    return true
+                }
+            }
+        }
+
+        return false
+    }, [checkout, userCheckoutPath]);
+
     const checkoutPaths = useMemo(() => {
         const outs = CHECKOUTS[checkout]
         const paths: ReactElement[] = []
@@ -63,11 +77,6 @@ const Header = () => {
         if (outs?.length) {
             for (const out of outs) {
                 const pathItems: ReactElement[] = []
-
-                if (out.join('') === userCheckoutPath.join('')) {
-                    console.log('CHECKOUT PATH MATCH', { out });
-                    console.log(out);
-                }
 
                 for (const key of out) {
                     const itemKey = `${key}-${i++}`
@@ -124,7 +133,7 @@ const Header = () => {
             <div className="w-screen">
                 {message && <div className={cn('p-2', { "bg-red-800": message.type === 'error', "bg-green-800": message.type === 'success' })}>{message.text}</div>}
 
-                {showCheckoutPath && <div className="bg-[#011006] flex flex-wrap items-center justify-center gap-4 p-2">{checkoutPaths}</div>}
+                {isUserPathValidCheckout || showCheckoutPath && <div className="bg-[#011006] flex flex-wrap items-center justify-center gap-4 p-2">{checkoutPaths}</div>}
 
                 <div className='w-80 bg-green-950 flex items-center justify-between m-auto p-4 rounded-[0px_0px_20px_20px]'>
                     <button className="bg-purple-600 rounded-sm p-3 cursor-pointer hover:bg-white hover:text-purple-600 transition-colors" onClick={onToggleCheckoutClick}>{showCheckoutPath ? 'Hide' : 'Show'} Checkout</button>

@@ -4,11 +4,11 @@ import Footer from '../Footer/Footer'
 
 function App() {
   return (
-    <>
+    <div className='lock-screen bg-gray-700'>
       <Header />
       <Dartboard />
       <Footer />
-    </>
+    </div>
   )
 }
 
