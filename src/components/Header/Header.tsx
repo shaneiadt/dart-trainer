@@ -121,10 +121,12 @@ const Header = () => {
                     />
                 </div>
             </div>
-            <div>
-                {message && <div className={cn('p-2',{ "bg-red-800": message.type === 'error', "bg-green-800": message.type === 'success' })}>{message.text}</div>}
-                {showCheckoutPath && <div className="bg-[#011006] flex items-center justify-center gap-4 p-2">{checkoutPaths}</div>}
-                <div className='bg-green-950 flex w-80 items-center justify-between m-auto p-4 rounded-[0px_0px_20px_20px]'>
+            <div className="w-screen">
+                {message && <div className={cn('p-2', { "bg-red-800": message.type === 'error', "bg-green-800": message.type === 'success' })}>{message.text}</div>}
+
+                {showCheckoutPath && <div className="bg-[#011006] flex flex-wrap items-center justify-center gap-4 p-2">{checkoutPaths}</div>}
+
+                <div className='w-80 bg-green-950 flex items-center justify-between m-auto p-4 rounded-[0px_0px_20px_20px]'>
                     <button className="bg-purple-600 rounded-sm p-3 cursor-pointer hover:bg-white hover:text-purple-600 transition-colors" onClick={onToggleCheckoutClick}>{showCheckoutPath ? 'Hide' : 'Show'} Checkout</button>
                     <button className="bg-purple-600 rounded-sm p-3 cursor-pointer hover:bg-white hover:text-purple-600 transition-colors" onClick={onNextCheckoutClick}>Next Checkout</button>
                 </div>

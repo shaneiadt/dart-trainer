@@ -1,9 +1,11 @@
-import { MouseEvent, useState } from "react"
+import { useState } from "react"
 import cn from "classnames"
 import { useAppDispatch, useAppSelector } from "../../store"
 import { BoardKey, SECTOR_COLORS } from "../../constants"
 import { addPath } from "../../features/checkout/checkoutSlice"
 import { getIsDartboardDisabled, getUserCheckoutPath } from "../../features/checkout/selectors"
+import { isTouchEvent } from "./utils"
+import { useIsMobile } from "../../hooks"
 
 export interface DartboardSVGProps {
     disabled?: boolean
@@ -12,14 +14,17 @@ export interface DartboardSVGProps {
 const Dartboard = () => {
     const dispatch = useAppDispatch();
 
+    const isMobile = useIsMobile();
+
     const isDartBoardDisabled = useAppSelector(getIsDartboardDisabled);
     const userCheckoutPath = useAppSelector(getUserCheckoutPath);
 
     const [mouseEnter, setMouseEnter] = useState<BoardKey | null>(null)
-
     const [isMouseDown, setIsMouseDown] = useState(false)
 
-    const onMouseEnter = (e: MouseEvent) => {
+
+
+    const onMouseEnter = (e: React.MouseEvent) => {
         if (isDartBoardDisabled || !e.target) {
             return;
         }
@@ -35,15 +40,15 @@ const Dartboard = () => {
     }
 
     const onMouseDown = () => {
-        if (isDartBoardDisabled) {
+        if (isDartBoardDisabled || isMobile) {
             return;
         }
 
         setIsMouseDown(true)
     }
 
-    const onMouseUp = (e: MouseEvent) => {
-        if (isDartBoardDisabled || !e.target || !isMouseDown) {
+    const onMouseUp = (e: React.MouseEvent) => {
+        if (isDartBoardDisabled || !e.target || !isMouseDown || isMobile) {
             return;
         }
 
@@ -77,19 +82,69 @@ const Dartboard = () => {
         }
     }
 
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        if (!isMobile || isDartBoardDisabled || !e.target || !isTouchEvent(e)) {
+            return;
+        }
+
+        const value = (e.target as SVGElement).dataset.value as BoardKey
+        setIsMouseDown(true)
+        setMouseEnter(value)
+    }
+    const onTouchMove = (e: React.TouchEvent) => {
+        if (!isMobile || isDartBoardDisabled || !e.target) {
+            return;
+        }
+
+        const touch = e.touches[0]
+        const x = touch.clientX
+        const y = touch.clientY
+        const currentElement = document.elementFromPoint(x, y)
+
+        if (!isTouchEvent(e)) {
+            return
+        }
+
+        const el = (currentElement as SVGElement)
+
+
+        const value = el.dataset.value
+
+        if (value !== mouseEnter) {
+            setMouseEnter(value as BoardKey)
+        }
+    }
+    const onTouchEnd = (e: React.TouchEvent) => {
+        if (!isMobile || isDartBoardDisabled || !e.target || !isMouseDown) {
+            return;
+        }
+
+        setIsMouseDown(false);
+        if (mouseEnter) {
+            dispatch(addPath(mouseEnter))
+        }
+    }
     return (
-        <section className='sm:pt-20 md:pt-[100px]'>
+        <section className='sm:pt-20 md:pt-[100px]'
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 2000 2000"
                 style={{ height: "100vh", width: "100vw" }}
+                className="fill-black"
             >
                 <circle onMouseLeave={resetIsMouseDown} className="fill-gray-800" cx="1010.23" cy="1010.23" r="1004" />
                 <circle className="fill-black" cx="1010.23" cy="1010.23" r="959" />
 
+                <path data-value="S20" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('S20')} d="M1212.24,391.37l-34,214.71a506.32,506.32,0,0,0-156.46,0l-34-214.71a729.19,729.19,0,0,1,224.48,0Z" transform="translate(-89.77 -89.77)" />
                 <path data-value="D20" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('D20')} d="M1223.92,317.64l-9.7,61.2-2,12.53a729.19,729.19,0,0,0-224.48,0l-2-12.53-9.7-61.2a801.3,801.3,0,0,1,247.84,0Z" transform="translate(-89.77 -89.77)" />
                 <path data-value="D5" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('D5')} d="M987.76,391.37a710.37,710.37,0,0,0-167,47.68q-23.71,10-46.53,21.66L768.5,449.4l-28.13-55.22a786,786,0,0,1,235.71-76.54l9.7,61.2Z" transform="translate(-89.77 -89.77)" />
                 <path data-value="S5" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('S5')} d="M1021.77,606.08A496.3,496.3,0,0,0,873,654.41l-98.7-193.7q22.8-11.62,46.53-21.66a710.37,710.37,0,0,1,167-47.68Z" transform="translate(-89.77 -89.77)" />
+
                 <path data-value="D12" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('D12')} d="M774.26,460.71A715.3,715.3,0,0,0,592.78,592.78l-9-9L540,540a794.07,794.07,0,0,1,200.4-145.79L768.5,449.4Z" transform="translate(-89.77 -89.77)" />
                 <path data-value="D9" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('D9')} d="M592.78,592.78A715.3,715.3,0,0,0,460.71,774.26L449.4,768.5l-55.22-28.13A794.07,794.07,0,0,1,540,540l43.84,43.84Z" transform="translate(-89.77 -89.77)" />
                 <path data-value="D14" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('D14')} d="M460.71,774.26q-11.62,22.8-21.66,46.53a710.37,710.37,0,0,0-47.68,167l-12.53-2-61.2-9.7a786,786,0,0,1,76.54-235.71L449.4,768.5Z" transform="translate(-89.77 -89.77)" />
@@ -122,7 +177,6 @@ const Dartboard = () => {
                 <path data-value="S13" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('S13')} d="M1808.63,987.76l-214.71,34A496.3,496.3,0,0,0,1545.59,873l193.7-98.7q11.63,22.8,21.66,46.53A710.37,710.37,0,0,1,1808.63,987.76Z" transform="translate(-89.77 -89.77)" />
                 <path data-value="S4" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('S4')} d="M1739.29,774.26,1545.59,873a501.38,501.38,0,0,0-92-126.51l153.67-153.67A715.3,715.3,0,0,1,1739.29,774.26Z" transform="translate(-89.77 -89.77)" />
                 <path data-value="S18" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('S18')} d="M1607.22,592.78,1453.55,746.45a501.38,501.38,0,0,0-126.51-92l98.7-193.7A715.3,715.3,0,0,1,1607.22,592.78Z" transform="translate(-89.77 -89.77)" />
-                <path data-value="S20" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('S20')} d="M1212.24,391.37l-34,214.71a506.32,506.32,0,0,0-156.46,0l-34-214.71a729.19,729.19,0,0,1,224.48,0Z" transform="translate(-89.77 -89.77)" />
                 <path data-value="S1" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('S1')} d="M1425.74,460.71,1327,654.41a496.3,496.3,0,0,0-148.81-48.33l34-214.71a710.37,710.37,0,0,1,167,47.68Q1402.93,449.09,1425.74,460.71Z" transform="translate(-89.77 -89.77)" />
                 <path data-value="S12" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('S12')} d="M873,654.41a501.38,501.38,0,0,0-126.51,92L592.78,592.78A715.3,715.3,0,0,1,774.26,460.71Z" transform="translate(-89.77 -89.77)" />
                 <path data-value="S9" onMouseUp={onMouseUp} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} className={getClassName('S9')} d="M746.45,746.45a501.38,501.38,0,0,0-92,126.51l-193.7-98.7A715.3,715.3,0,0,1,592.78,592.78Z" transform="translate(-89.77 -89.77)" />
