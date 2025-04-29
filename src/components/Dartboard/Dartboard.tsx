@@ -20,14 +20,7 @@ const Dartboard = () => {
 
     const [mouseEnter, setMouseEnter] = useState<BoardKey | null>(null)
     const [isMouseDown, setIsMouseDown] = useState(false)
-
-    // https://dev.to/morewings/how-to-detect-touch-devices-using-browser-media-queries-1kbm
-
-    // const primaryPointer = usePrimaryPointerQuery();
     const hasCoarse = useAnyPointerQuery(Pointers.coarse);
-    // const hasFine = useAnyPointerQuery(Pointers.fine);
-    // const hasVoice = useAnyPointerQuery(Pointers.none);
-    // const hasStylus = useAnyStylusQuery();
 
     const onMouseEnter = (e: React.MouseEvent) => {
         if (isDartBoardDisabled || !e.target) {
