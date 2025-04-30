@@ -1,4 +1,4 @@
-import { getDartsRemaining } from "../../features/checkout/selectors";
+import { getDartsRemaining } from "../../features/checkoutTrainer/selectors";
 import { useAppSelector } from "../../store";
 import Dart from "../Dart/Dart";
 

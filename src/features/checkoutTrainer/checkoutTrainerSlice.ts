@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BoardKey, CHECKOUTS, CheckoutsType } from "../../constants";
 import { random } from "lodash";
+import { CHECKOUTS, CheckoutsType } from "../../constants/checkouts";
+import { BoardKey } from "../../constants/values";
 
-export interface CheckoutState {
+export interface CheckoutTrainerState {
   checkout: number;
   minCheckoutValue: number;
   maxCheckoutValue: number;
   path: BoardKey[];
   showPath: boolean;
+  gameInProgress: boolean;
 }
 
 const checkoutKeys = Object.keys(CHECKOUTS).map((n: keyof CheckoutsType) => n);
@@ -15,12 +17,13 @@ const initialMin = Number(checkoutKeys[0]);
 const initialMax = Number(checkoutKeys[checkoutKeys.length - 1]);
 const synth = window.speechSynthesis;
 
-const initialState: CheckoutState = {
-  checkout: random(initialMin, initialMax),
+const initialState: CheckoutTrainerState = {
+  checkout: 0,
   minCheckoutValue: initialMin,
   maxCheckoutValue: initialMax,
   path: [],
   showPath: false,
+  gameInProgress: false,
 };
 
 const { reducer, actions } = createSlice({
@@ -45,6 +48,9 @@ const { reducer, actions } = createSlice({
     showPath: (state, { payload }: PayloadAction<boolean>) => {
       state.showPath = payload;
     },
+    startGame: (state) => {
+      state.gameInProgress = true;
+    },
     calculateCheckout: (state) => {
       const { minCheckoutValue, maxCheckoutValue } = state;
       const rand = random(minCheckoutValue, maxCheckoutValue);
@@ -62,6 +68,7 @@ export const {
   setCheckout,
   setMinCheckoutValue,
   setMaxCheckoutValue,
+  startGame,
   addPath,
   resetPath,
   showPath,

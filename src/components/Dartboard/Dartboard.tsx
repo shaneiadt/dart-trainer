@@ -1,12 +1,13 @@
 import { useState } from "react"
 import cn from "classnames"
 import { useAppDispatch, useAppSelector } from "../../store"
-import { BoardKey, SECTOR_COLORS } from "../../constants"
-import { addPath } from "../../features/checkout/checkoutSlice"
-import { getIsDartboardDisabled, getUserCheckoutPath } from "../../features/checkout/selectors"
+import { addPath } from "../../features/checkoutTrainer/checkoutTrainerSlice"
+import { getIsDartboardDisabled, getUserCheckoutPath } from "../../features/checkoutTrainer/selectors"
 import { isTouchEvent } from "./utils"
 import { Pointers } from "../../hooks/usePrimaryPointerQuery"
 import { useAnyPointerQuery } from "../../hooks/useAnyPointerQuery"
+import { BoardKey } from "../../constants/values"
+import { SECTOR_COLORS } from "../../constants/colors"
 
 export interface DartboardSVGProps {
     disabled?: boolean

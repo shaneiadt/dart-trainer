@@ -1,4 +1,4 @@
-import { BOARD_VALUES } from "../../constants";
+import { BOARD_VALUES } from "../../constants/values";
 import { RootState } from "../../store";
 
 export const getCheckoutTrainerState = (state: RootState) =>
@@ -17,6 +17,9 @@ export const getShowPath = (state: RootState) =>
 
 export const getUserCheckoutPath = (state: RootState) =>
   getCheckoutTrainerState(state).path;
+
+export const getIsCheckoutTrainerGameInProgress = (state: RootState) =>
+  getCheckoutTrainerState(state).gameInProgress;
 
 export const getIsLastDartDouble = (state: RootState): boolean =>
   !!getCheckoutTrainerState(state).path[
@@ -37,7 +40,9 @@ export const getIsCheckedOut = (state: RootState) => {
 };
 
 export const getIsDartboardDisabled = (state: RootState) =>
-  getCheckoutTrainerState(state).path.length === 3 || getIsCheckedOut(state);
+  getCheckoutTrainerState(state).path.length === 3 ||
+  getIsCheckedOut(state) ||
+  !getIsCheckoutTrainerGameInProgress(state);
 
 export const getDartsRemaining = (state: RootState) =>
-  3 - (getUserCheckoutPath(state).length);
+  3 - getUserCheckoutPath(state).length;

@@ -1,11 +1,13 @@
 import { ChangeEvent, ReactElement, useEffect, useMemo, useState } from "react";
-import { CHECKOUTS, CheckoutsType } from "../../constants";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { calculateCheckout, resetPath, setMaxCheckoutValue, setMinCheckoutValue, showPath } from "../../features/checkout/checkoutSlice";
-import { getCheckoutValue, getIsCheckedOut, getIsLastDartDouble, getMaxCheckoutValue, getMinCheckoutValue, getShowPath, getUserCheckoutPath, getUserCheckoutValue } from "../../features/checkout/selectors";
+import { calculateCheckout, resetPath, setMaxCheckoutValue, setMinCheckoutValue, showPath, startGame } from "../../features/checkoutTrainer/checkoutTrainerSlice";
+import { getCheckoutValue, getIsCheckedOut, getIsCheckoutTrainerGameInProgress, getIsLastDartDouble, getMaxCheckoutValue, getMinCheckoutValue, getShowPath, getUserCheckoutPath, getUserCheckoutValue } from "../../features/checkoutTrainer/selectors";
 import { isEqual } from "lodash";
 import cn from "classnames";
-import { useDebounce } from "../../hooks/useDebounce";
+import { CHECKOUTS, CheckoutsType } from "../../constants/checkouts";
+import Button from "../Button/Button";
+import { Cog6ToothIcon } from "@heroicons/react/24/solid";
+import Dialog from "../Dialog/Dialog";
 
 const checkoutKeys = Object.keys(CHECKOUTS).map((n: keyof CheckoutsType) => n);
 const firstKey = Number(checkoutKeys[0]);
@@ -15,6 +17,7 @@ type MessageType = 'success' | 'error'
 
 const Header = () => {
     const [message, setMessage] = useState<{ text: string; type: MessageType } | null>(null)
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
 
     const dispatch = useAppDispatch()
     const checkout = useAppSelector(getCheckoutValue)
@@ -23,6 +26,7 @@ const Header = () => {
     const showCheckoutPath = useAppSelector(getShowPath)
     const userCheckoutValue = useAppSelector(getUserCheckoutValue)
     const userCheckoutPath = useAppSelector(getUserCheckoutPath)
+    const isGameInProgress = useAppSelector(getIsCheckoutTrainerGameInProgress)
 
     const isLastDartDouble = useAppSelector(getIsLastDartDouble)
 
@@ -34,24 +38,12 @@ const Header = () => {
         }
     }, [checkedOut, checkout, isLastDartDouble, userCheckoutPath, userCheckoutValue])
 
-    // TODO: Debounce this with listener middleware
-    const debouncedCheckoutCalulation = useDebounce(() => {
-        if (minCheckoutValue >= maxCheckoutValue) {
-            setMessage({ text: 'Min must be less than Max', type: 'error' });
-        } else {
-            setMessage(null);
-            dispatch(calculateCheckout())
-        }
-    });
-
     const onMinRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(setMinCheckoutValue(Number(e.target.value)))
-        debouncedCheckoutCalulation()
     }
 
     const onMaxRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(setMaxCheckoutValue(Number(e.target.value)))
-        debouncedCheckoutCalulation()
     }
 
     const isUserPathValidCheckout = useMemo(() => {
@@ -92,55 +84,82 @@ const Header = () => {
 
     const onToggleCheckoutClick = () => dispatch(showPath(!showCheckoutPath));
     const onNextCheckoutClick = () => {
-        dispatch(calculateCheckout());
-        dispatch(resetPath())
+        if (minCheckoutValue >= maxCheckoutValue) {
+            setMessage({ text: 'Min must be less than Max', type: 'error' });
+        } else {
+            setMessage(null);
+            dispatch(calculateCheckout())
+            dispatch(resetPath())
+        }
     };
 
     return (
-        <header className="fixed">
-            <div className='flex w-screen items-center justify-evenly content-center bg-green-950'>
-                <div className='pt-2 pb-2'>
-                    <div>
-                        {minCheckoutValue}
+        <>
+            {isDialogOpen && (
+                <Dialog
+                    onClose={() => setIsDialogOpen(!isDialogOpen)}
+                    title="Checkout Trainer Settings"
+                >
+                    CONTENT
+                </Dialog>
+            )}
+            <header className="fixed">
+                <Cog6ToothIcon className="hover:rotate-45 transition-transform size-6 absolute cursor-pointer top-5 right-2" onClick={() => setIsDialogOpen(!isDialogOpen)} />
+                <div className='flex w-screen items-center justify-evenly content-center bg-green-950'>
+                    <div className='pt-2 pb-2'>
+                        <div>
+                            {minCheckoutValue}
+                        </div>
+                        <input
+                            onChange={onMinRangeChange}
+                            type="range"
+                            step="1"
+                            id="range"
+                            name="range"
+                            value={minCheckoutValue}
+                            min={firstKey}
+                        /></div>
+                    <div className='w-20 text-2xl bg-green-800 self-stretch content-center'>
+                        <h2>{checkout}</h2>
                     </div>
-                    <input
-                        onChange={onMinRangeChange}
-                        type="range"
-                        step="1"
-                        id="range"
-                        name="range"
-                        value={minCheckoutValue}
-                        min={firstKey}
-                    /></div>
-                <div className='w-20 text-2xl bg-green-800 self-stretch content-center'>
-                    <h2>{checkout}</h2>
-                </div>
-                <div className='pt-2 pb-2'>
-                    <div>
-                        {maxCheckoutValue}
+                    <div className='pt-2 pb-2'>
+                        <div>
+                            {maxCheckoutValue}
+                        </div>
+                        <input
+                            onChange={onMaxRangeChange}
+                            type="range"
+                            step="1"
+                            id="range"
+                            name="range"
+                            value={maxCheckoutValue}
+                            max={lastKey}
+                        />
                     </div>
-                    <input
-                        onChange={onMaxRangeChange}
-                        type="range"
-                        step="1"
-                        id="range"
-                        name="range"
-                        value={maxCheckoutValue}
-                        max={lastKey}
-                    />
                 </div>
-            </div>
-            <div className="w-screen">
-                {message && <div className={cn('p-2', { "bg-red-800": message.type === 'error', "bg-green-800": message.type === 'success' })}>{message.text}</div>}
+                <div className="w-screen">
+                    {message && <div className={cn('p-2', { "bg-red-800": message.type === 'error', "bg-green-800": message.type === 'success' })}>{message.text}</div>}
 
-                {isUserPathValidCheckout || showCheckoutPath && <div className="bg-[#011006] flex flex-wrap items-center justify-center gap-4 p-2">{checkoutPaths}</div>}
+                    {(isUserPathValidCheckout || showCheckoutPath && message?.type !== 'error') && <div className="bg-[#011006] flex flex-wrap items-center justify-center gap-4 p-2">{checkoutPaths}</div>}
 
-                <div className='w-80 bg-green-950 flex items-center justify-between m-auto p-4 rounded-[0px_0px_20px_20px]'>
-                    <button className="bg-purple-600 rounded-sm p-3 cursor-pointer hover:bg-white hover:text-purple-600 transition-colors" onClick={onToggleCheckoutClick}>{showCheckoutPath ? 'Hide' : 'Show'} Checkout</button>
-                    <button className="bg-purple-600 rounded-sm p-3 cursor-pointer hover:bg-white hover:text-purple-600 transition-colors" onClick={onNextCheckoutClick}>Next Checkout</button>
+                    <div className='w-80 bg-green-950 flex items-center justify-between m-auto p-4 rounded-[0px_0px_20px_20px]'>
+                        {isGameInProgress ? (
+                            <>
+                                {message?.type !== 'error' && (
+                                    <Button text={`${showCheckoutPath ? 'Hide' : 'Show'} Checkout`} onClick={onToggleCheckoutClick} />
+                                )}
+                                <Button className={`${message?.type === 'error' && 'w-full'}`} text="Next Checkout" onClick={onNextCheckoutClick} />
+                            </>
+                        ) : (
+                            <Button className="w-full" text="Start" onClick={() => {
+                                onNextCheckoutClick();
+                                dispatch(startGame());
+                            }} />
+                        )}
+                    </div>
                 </div>
-            </div>
-        </header>
+            </header>
+        </>
     )
 }
 
