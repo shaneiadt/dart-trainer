@@ -26,6 +26,17 @@ export const getIsLastDartDouble = (state: RootState): boolean =>
     getCheckoutTrainerState(state).path.length - 1
   ]?.includes("D");
 
+export const isBusted = (state: RootState) => {
+  const checkout = getCheckoutValue(state);
+  const userCheckoutValue = getUserCheckoutValue(state);
+  const isLastDartDouble = getIsLastDartDouble(state);
+
+  return (
+    userCheckoutValue > checkout ||
+    (userCheckoutValue === checkout && !isLastDartDouble)
+  );
+};
+
 export const getUserCheckoutValue = (state: RootState) =>
   getCheckoutTrainerState(state)
     .path.map((bk) => BOARD_VALUES[bk])
@@ -42,7 +53,8 @@ export const getIsCheckedOut = (state: RootState) => {
 export const getIsDartboardDisabled = (state: RootState) =>
   getCheckoutTrainerState(state).path.length === 3 ||
   getIsCheckedOut(state) ||
-  !getIsCheckoutTrainerGameInProgress(state);
+  !getIsCheckoutTrainerGameInProgress(state) ||
+  isBusted(state);
 
 export const getDartsRemaining = (state: RootState) =>
   3 - getUserCheckoutPath(state).length;

@@ -15,7 +15,7 @@ export interface CheckoutTrainerState {
 const checkoutKeys = Object.keys(CHECKOUTS).map((n: keyof CheckoutsType) => n);
 const initialMin = Number(checkoutKeys[0]);
 const initialMax = Number(checkoutKeys[checkoutKeys.length - 1]);
-const synth = window.speechSynthesis;
+const synth = globalThis.speechSynthesis;
 
 const initialState: CheckoutTrainerState = {
   checkout: 0,
