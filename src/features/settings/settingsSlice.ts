@@ -1,12 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { SettingsState } from "./types";
+import { loadSettings, saveSettings } from "./utils";
 
-export interface SettingsState {
-  showRemainingCheckoutValue: boolean;
-}
-
-const initialState: SettingsState = {
-  showRemainingCheckoutValue: false,
-};
+const initialState: SettingsState = loadSettings();
 
 const { reducer, actions } = createSlice({
   name: "settings",
@@ -14,6 +10,7 @@ const { reducer, actions } = createSlice({
   reducers: {
     toggleShowRemainingCheckoutValue: (state) => {
       state.showRemainingCheckoutValue = !state.showRemainingCheckoutValue;
+      saveSettings(state);
     },
   },
 });
