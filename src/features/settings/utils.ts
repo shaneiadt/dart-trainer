@@ -1,8 +1,10 @@
-import { STORAGE_KEY, STORAGE_VERSION } from "./constants";
+import { STORAGE_KEY, STORAGE_VERSION } from "../../constants/settings";
 import { PersistedSettings, SettingsState } from "./types";
 
 const defaultSettings: SettingsState = {
   showRemainingCheckoutValue: false,
+  displayWelcomeMessage: true,
+  isVoiceoverEnabled: true,
 };
 
 export const migrateSettings = (

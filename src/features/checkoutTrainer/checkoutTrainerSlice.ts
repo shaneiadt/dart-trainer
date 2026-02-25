@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { random } from "lodash";
 import { CHECKOUTS, CheckoutsType } from "../../constants/checkouts";
 import { BoardKey } from "../../constants/values";
+import { loadSettings } from "../settings/utils";
 
 export interface CheckoutTrainerState {
   checkout: number;
@@ -55,7 +56,9 @@ const { reducer, actions } = createSlice({
       const { minCheckoutValue, maxCheckoutValue } = state;
       const rand = random(minCheckoutValue, maxCheckoutValue);
 
-      synth.speak(new SpeechSynthesisUtterance(`you require ${rand} `));
+      if (loadSettings().isVoiceoverEnabled) {
+        synth.speak(new SpeechSynthesisUtterance(`you require ${rand} `));
+      }
 
       state.checkout = rand;
       state.path = [];

@@ -12,9 +12,21 @@ const { reducer, actions } = createSlice({
       state.showRemainingCheckoutValue = !state.showRemainingCheckoutValue;
       saveSettings(state);
     },
+    toggleDisplayWelcomeMessage: (state) => {
+      state.displayWelcomeMessage = !state.displayWelcomeMessage;
+      saveSettings(state);
+    },
+    toggleVoiceover: (state) => {
+      state.isVoiceoverEnabled = !state.isVoiceoverEnabled;
+      saveSettings(state);
+    },
   },
 });
 
-export const { toggleShowRemainingCheckoutValue } = actions;
+export const {
+  toggleShowRemainingCheckoutValue,
+  toggleDisplayWelcomeMessage,
+  toggleVoiceover,
+} = actions;
 
 export default reducer;
