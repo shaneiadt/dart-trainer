@@ -5,6 +5,7 @@ const defaultSettings: SettingsState = {
   showRemainingCheckoutValue: false,
   displayWelcomeMessage: true,
   isVoiceoverEnabled: true,
+  isSpeechRecognitionEnabled: false,
 };
 
 export const migrateSettings = (

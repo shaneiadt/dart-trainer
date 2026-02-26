@@ -20,6 +20,10 @@ const { reducer, actions } = createSlice({
       state.isVoiceoverEnabled = !state.isVoiceoverEnabled;
       saveSettings(state);
     },
+    toggleSpeechRecognition: (state) => {
+      state.isSpeechRecognitionEnabled = !state.isSpeechRecognitionEnabled;
+      saveSettings(state);
+    },
   },
 });
 
@@ -27,6 +31,7 @@ export const {
   toggleShowRemainingCheckoutValue,
   toggleDisplayWelcomeMessage,
   toggleVoiceover,
+  toggleSpeechRecognition,
 } = actions;
 
 export default reducer;

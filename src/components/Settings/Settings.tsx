@@ -4,6 +4,7 @@ import { getSettingsState } from "../../features/settings/selectors";
 import {
   toggleDisplayWelcomeMessage,
   toggleShowRemainingCheckoutValue,
+  toggleSpeechRecognition,
   toggleVoiceover,
 } from "../../features/settings/settingsSlice";
 import { SettingsToggle } from "./SettingsToggle";
@@ -20,6 +21,7 @@ export const Settings = ({ onClose }: Readonly<SettingsProps>) => {
     showRemainingCheckoutValue,
     displayWelcomeMessage,
     isVoiceoverEnabled,
+    isSpeechRecognitionEnabled,
   } = settingsState;
 
   return (
@@ -27,10 +29,17 @@ export const Settings = ({ onClose }: Readonly<SettingsProps>) => {
       <ul className="list-none">
         <SettingsToggle
           id="voiceover"
-          label="Enable/Disable voiceover"
+          label="Voiceover"
           ariaLabel="Toggle Voiceover"
           checked={isVoiceoverEnabled}
           onChange={() => dispatch(toggleVoiceover())}
+        />
+        <SettingsToggle
+          id="speech-recognition"
+          label="Speech Recognition"
+          ariaLabel="Toggle Speech Recognition"
+          checked={isSpeechRecognitionEnabled}
+          onChange={() => dispatch(toggleSpeechRecognition())}
         />
         <SettingsToggle
           id="show-remaining-checkout-value"

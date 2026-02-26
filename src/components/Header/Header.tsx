@@ -1,6 +1,7 @@
 import { ChangeEvent, ReactElement, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
 import {
+  addPath,
   calculateCheckout,
   resetPath,
   setMaxCheckoutValue,
@@ -10,6 +11,7 @@ import {
 } from "../../features/checkoutTrainer/checkoutTrainerSlice";
 import {
   getCheckoutValue,
+  getIsDartboardDisabled,
   getIsCheckedOut,
   getIsCheckoutTrainerGameInProgress,
   getIsLastDartDouble,
@@ -27,6 +29,7 @@ import Button from "../Button/Button";
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { Settings } from "../Settings/Settings";
 import { getSettingsState } from "../../features/settings/selectors";
+import { useVoiceBoardInput } from "../../hooks/useVoiceBoardInput";
 
 const checkoutKeys = Object.keys(CHECKOUTS).map((n: keyof CheckoutsType) => n);
 const firstKey = Number(checkoutKeys[0]);
@@ -50,9 +53,11 @@ const Header = () => {
   const userCheckoutPath = useAppSelector(getUserCheckoutPath);
 
   const isGameInProgress = useAppSelector(getIsCheckoutTrainerGameInProgress);
+  const isDartBoardDisabled = useAppSelector(getIsDartboardDisabled);
   const settingsState = useAppSelector(getSettingsState);
 
-  const { showRemainingCheckoutValue } = settingsState;
+  const { showRemainingCheckoutValue, isSpeechRecognitionEnabled } =
+    settingsState;
 
   const isLastDartDouble = useAppSelector(getIsLastDartDouble);
   const isUserBusted = useAppSelector(isBusted);
@@ -138,6 +143,51 @@ const Header = () => {
       dispatch(resetPath());
     }
   };
+  const onStartClick = () => {
+    onNextCheckoutClick();
+    dispatch(startGame());
+  };
+
+  useVoiceBoardInput({
+    enabled: isSpeechRecognitionEnabled,
+    disabled: isDartBoardDisabled,
+    onBoardKey: (spokenKey) => {
+      dispatch(addPath(spokenKey));
+    },
+    onCommand: (command) => {
+      if (command === "next_checkout") {
+        if (isGameInProgress) {
+          onNextCheckoutClick();
+        }
+        return;
+      }
+
+      if (command === "start_game") {
+        if (!isGameInProgress) {
+          onStartClick();
+        }
+        return;
+      }
+
+      if (!isGameInProgress || message?.type === "error") {
+        return;
+      }
+
+      if (command === "show_checkout") {
+        dispatch(showPath(true));
+        return;
+      }
+
+      if (command === "hide_checkout") {
+        dispatch(showPath(false));
+        return;
+      }
+
+      if (command === "toggle_checkout") {
+        onToggleCheckoutClick();
+      }
+    },
+  });
 
   const remaining = checkout - userCheckoutValue;
   return (
@@ -227,10 +277,7 @@ const Header = () => {
               <Button
                 className="w-full"
                 text="Start"
-                onClick={() => {
-                  onNextCheckoutClick();
-                  dispatch(startGame());
-                }}
+                onClick={onStartClick}
               />
             )}
           </div>
