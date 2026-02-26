@@ -80,21 +80,31 @@ const Dartboard = () => {
     dispatch(addPath(value as BoardKey));
   };
 
-  const getClassName = (key: BoardKey) =>
-    cn({
-      "fill-purple-300": isHighlighted(key),
-      [`${SECTOR_COLORS[key]}`]: !isHighlighted(key),
-    });
+  const getHighlightFillClass = (count: number): string => {
+    if (count >= 3) {
+      return "fill-purple-900";
+    }
 
-  const isHighlighted = (key: BoardKey): boolean => {
-    return (
-      (isMouseDown && mouseEnter === String(key)) ||
-      isIncludedInUserCheckoutPath(key)
-    );
+    if (count === 2) {
+      return "fill-purple-700";
+    }
+
+    return "fill-purple-400";
   };
 
-  const isIncludedInUserCheckoutPath = (key: BoardKey): boolean =>
-    userCheckoutPath.includes(key);
+  const getClassName = (key: BoardKey) => {
+    const pathCount = getUserCheckoutPathCount(key);
+    const isDraggedSegment = isMouseDown && mouseEnter === key;
+    const shouldHighlight = isDraggedSegment || pathCount > 0;
+
+    return cn({
+      [getHighlightFillClass(Math.max(pathCount, 1))]: shouldHighlight,
+      [`${SECTOR_COLORS[key]}`]: !shouldHighlight,
+    });
+  };
+
+  const getUserCheckoutPathCount = (key: BoardKey): number =>
+    userCheckoutPath.filter((pathKey) => pathKey === key).length;
 
   const resetIsMouseDown = () => {
     if (isMouseDown) {
