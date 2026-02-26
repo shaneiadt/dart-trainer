@@ -163,7 +163,7 @@ const Header = () => {
               min={firstKey}
             />
           </div>
-          <div className="w-20 text-2xl bg-green-800 self-stretch content-center">
+          <div className="w-20 text-2xl bg-green-800 self-stretch content-center relative">
             <h2>{checkout}</h2>
             <h3 className="text-sm">
               {showRemainingCheckoutValue &&
